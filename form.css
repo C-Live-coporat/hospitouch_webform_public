@@ -1,0 +1,109 @@
+/* --- スプラッシュ/メッセージ（必要なら使える） --- */
+.wf_customMessageBox {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #132C14;
+  background: #F5FAF5;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.25);
+  max-width: 90%;
+  width: max-content;
+  word-break: break-word;
+  z-index: 11000;
+  border-radius: 6px;
+  border: 1px solid #A9D3AB;
+  min-width: 100px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.wf_customCircle { position: relative; background-color: #12AA67; border-radius: 100%; width: 20px; height: 20px; flex:none; margin-right: 7px; }
+.wf_customCheckMark { box-sizing: unset !important; position: absolute; transform: rotate(45deg) translate(-50%, -50%); left: 6px; top: 9px; height: 8px; width: 3px; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+.wf_customClose { box-sizing: border-box; position: relative; width: 18px; height: 18px; }
+.wf_customClose::after, .wf_customClose::before { content: ''; display: block; box-sizing: border-box; position: absolute; width: 12px; height: 1.5px; background: #616E88; transform: rotate(45deg); border-radius: 5px; top: 8px; left: 1px; }
+.wf_customClose::after { transform: rotate(-45deg); }
+
+/* --- 全体/共通 --- */
+html, body { margin: 0; }
+hr { border: none; height: 1px; background-color: rgb(192,198,204); }
+
+#crmWebToEntityForm { background:#F7F7F7; }
+#crmWebToEntityForm.zcwf_lblLeft { width:100%; padding:10px 25px; margin:0 auto; box-sizing:border-box; }
+#crmWebToEntityForm.zcwf_lblLeft * { box-sizing:border-box; }
+#crmWebToEntityForm { text-align:left; }
+#crmWebToEntityForm * { direction:ltr; }
+
+.zcwf_topbackground{ background:#0a786c; width:100%; height:5px; margin:0 auto; border-top-left-radius:8px; border-top-right-radius:8px; }
+
+.zcwf_title{ font-size:24px; }
+.zcwf_lblLeft .zcwf_title{ word-wrap:break-word; padding:6px; font-weight:bold; }
+
+.zcwf_text{ font-size:16px; margin-top:14px; }
+.zcwf_Required{ font-size:12px; background:#cf566b; color:#fff; width:fit-content; padding:2px 8px 0; border-top-left-radius:6px; border-top-right-radius:6px; }
+.zcwf_checkbox_Required{ font-size:12px; background:#cf566b; color:#fff; width:fit-content; height:fit-content; padding:2px 8px; border-radius:6px; margin-top:20px; }
+.zcwf_NotRequired{ font-size:12px; background:#c0c6cc; border-bottom:none; width:fit-content; padding:2px 8px 0; border-top-left-radius:6px; border-top-right-radius:6px; }
+
+.phoneCom{ display:flex; }
+#redText{ color:#cf566b; font-size:14px; width:70%; margin-left:auto; display:none; }
+#redText.open{ display:block; }
+
+.zcwf_lblLeft .zcwf_col_fld input[type=text], input[type=password]{
+  width:100%; border:1px solid #c0c6cc; resize:vertical; border-radius:2px; float:left; height:48px; font-size:20px; outline:none;
+}
+.zcwf_col_fld textarea{ width:100%; height:125px; border:1px solid #c0c6cc!important; resize:vertical; border-radius:2px; float:left; font-size:20px; }
+.zcwf_lblLeft .zcwf_col_fld input[type=text].redBorder{ border:#cf566b 2px solid; }
+.zcwf_lblLeft .zcwf_col_fld input[type=text]:focus{ border:#213743 2px solid; }
+.zcwf_lblLeft .zcwf_col_fld input[type=text].redBorder:focus{ border:#cf566b 2px solid; }
+
+.zcwf_lblLeft .zcwf_col_lab{ width:30%; word-break:break-word; padding:0 6px; margin-right:10px; margin-top:16px; float:left; min-height:1px; }
+.zcwf_lblLeft .zcwf_col_fld{ float:left; width:68%; padding:0 6px; position:relative; margin-top:5px; }
+
+.first_zf{ display:flex; margin-bottom:20px; }
+
+.zcwf_ckbox input[type=checkbox]{ width:30px; height:30px; appearance:none; border:1px solid rgb(192,198,204); }
+.zcwf_ckbox input[type=checkbox]:checked{ appearance:auto; }
+.zcwf_ckbox{ margin-left:80px; display:flex; width:100px; margin-top:40px; }
+.zcwf_ckbox_text{ font-size:16px; line-height:40px; }
+
+.zcwf_lblLeft .zcwf_privacy{ padding:6px; }
+.zcwf_lblLeft .wfrm_fld_dpNn{ display:none; }
+.dIB{ display:inline-block; }
+
+.zcwf_lblLeft .zcwf_col_fld_slt{
+  width:100%; height:48px; border:1px solid #ccc; background:#fff; border-radius:2px; float:left; resize:vertical; padding:2px 5px; font-size:20px;
+}
+.zcwf_lblLeft .zcwf_row:after, .zcwf_lblLeft .zcwf_col_fld:after{ content:''; display:table; clear:both; }
+.zcwf_lblLeft .zcwf_col_help{ float:left; margin-left:7px; font-size:12px; max-width:35%; word-break:break-word; }
+.zcwf_lblLeft .zcwf_help_icon{ cursor:pointer; width:16px; height:16px; display:inline-block; background:#fff; border:1px solid #c0c6cc; color:#c1c1c1; text-align:center; font-size:11px; line-height:16px; font-weight:bold; border-radius:50%; }
+
+.zcwf_lblLeft .zcwf_row{ margin:30px 0; }
+.zcwf_lblLeft .formsubmit{ margin-right:5px; margin-left:40px; cursor:pointer; color:#213743; font-size:12px; }
+
+.zcwf_lblLeft .zcwf_button{
+  font-size:18px; color:#213743; border:1px solid #c0c6cc; padding:3px 9px; border-radius:4px; cursor:pointer; width:200px; height:50px; font-weight:500; background:#dcdcdc; white-space:nowrap;
+}
+.formsubmit.zcwf_button#formsubmit{ color:#fff!important; background:linear-gradient(0deg, #0a786c 0%, #0a786c 100%); }
+
+.zcwf_lblLeft .zcwf_tooltip_over{ position:relative; }
+.zcwf_lblLeft .zcwf_tooltip_ctn{ position:absolute; background:#dedede; padding:3px 6px; top:3px; border-radius:4px; word-break:break-word; min-width:100px; max-width:150px; color:#213743; z-index:100; }
+.zcwf_lblLeft .zcwf_ckbox{ float:left; }
+.zcwf_lblLeft .zcwf_file{ width:55%; box-sizing:border-box; float:left; }
+.cBoth:after{ content:''; display:block; clear:both; }
+
+@media all and (max-width: 600px){
+  .zcwf_lblLeft .zcwf_col_lab, .zcwf_lblLeft .zcwf_col_fld { width:auto; float:none!important; }
+  .zcwf_lblLeft .zcwf_col_help{ width:40%; }
+}
+
+/* --- 送信完了ブロック --- */
+.zcwf_ty-bg{ width:800px; height:5px; padding:0 30px; background:#0a786c; margin:200px auto 0; box-sizing:border-box; border-top-left-radius:4px; border-top-right-radius:4px; }
+.zcwf_ty{ max-width:800px; padding:30px 30px 200px; margin:0 auto; border:1px solid #c0c6cc!important; box-sizing:border-box; border-bottom-right-radius:4px; }
+.zcwf_ty .p-info{ text-align:center; }
+.transComp{ margin-bottom:20px; font-size:24px; font-weight:bold; }
+.transComp .material-icons{ color:#0a786c; transform:translateY(2px); }
+.zcwf_ty_text{ margin-top:20px; }
+
+/* 送信ボタン微調整 */
+#formsubmit{ padding:4px 30px; position:left; }
