@@ -10,13 +10,15 @@ export function setExclusiveCheckboxes(ids = []) {
   });
 }
 
-/** 電話：半角数字とハイフンのみ許可（blur時に赤枠/エラーテキストを切替） */
+/** 電話：半角数字・ハイフン・空白・+ を許可（blur時に赤枠/エラーテキストを切替） */
 export function attachPhoneHalfWidthHyphenOnly(phoneSelector, errorTextSelector) {
   const phone = document.querySelector(phoneSelector);
   const err = errorTextSelector ? document.querySelector(errorTextSelector) : null;
   if (!phone) return () => true;
 
-  const regex = /^[0-9\-]*$/;
+  // ここを拡張：+ と空白も許可
+  const regex = /^[0-9+\-\s]*$/;
+
   const handler = () => {
     const ok = regex.test(phone.value);
     phone.classList.toggle("redBorder", !ok);
