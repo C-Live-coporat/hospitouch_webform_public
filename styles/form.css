@@ -1,97 +1,113 @@
 /* ==========================================================================
   hospitouch_webform / styles/form.css
-  - Zoho埋め込みフォーム用の共通スタイル（配色・レイアウト微調整）
+  - Zoho埋め込みフォームの共通スタイル
 ========================================================================== */
 
-/* ========== 基本設定（色・余白・タイポ） ========== */
+/* ===== Brand tokens (hospi.ai color guide) ============================== */
 :root {
-  --c-text:         #313949;
-  --c-muted:        #616E88;
-  --c-border:       #c0c6cc;
-  --c-border-strong:#a9b0b8;
+  /* Text */
+  --text-main:  #203744;
+  --text-dark:  #6c848d;
+  --text-light: #9ea1a3;
 
-  /* ▼配色を2枚目のイメージに合わせて更新 */
-  --c-bg:           #f6f7f4;   /* ページ背景（淡いグレー） */
-  --c-panel:        #ffffff;   /* パネル背景（フォーム／注意事項の箱） */
-  --c-panel-border: #e1e5e0;   /* パネル外枠 */
-  --c-primary:      #0b7d62;   /* 送信ボタンの緑 */
-  --c-primary-2:    #096651;   /* ホバー用の濃い緑 */
-  --c-danger:       #cf566b;   /* 入力エラー枠線 */
+  /* Backgrounds（埋め込みページは白想定） */
+  --bg-page:  #ffffff;
+  --bg-panel: #f7f8fa;  /* フォーム/問い合わせ内容の面 */
+  /* --bg-panel-strong: #f3f4f6;  注意事項の面 */
 
-  --radius:         6px;
-  --space-1:        6px;
-  --space-2:        10px;
-  --space-3:        12px;
-  --space-4:        16px;
-  --space-5:        24px;
+  /* Lines */
+  --line:         #d8d9e0;
+  --line-strong:  #c0c6cc;
 
-  --field-height:   44px;      /* 入力欄の統一高さ（変更なし） */
-  --field-width:    60%;       /* 入力欄の統一幅（変更なし） */
+  /* Brand */
+  --brand:        #0a786c;
+  --brand-hover:  #086a60;
+
+  /* Accent */
+  --accent-pink:  #d1006c;  /* 必須バッジ */
+
+  --radius:   6px;
+  --space-1:  6px;
+  --space-2:  10px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+
+  /* 入力欄の幅・高さ */
+  --field-height: 44px;
+  --field-width:  80%;
 }
 
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
+/* ===== Base ============================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 html, body {
   margin: 0;
-  color: var(--c-text);
-  background: var(--c-bg); /* ← ページ背景 */
+  color: var(--text-main);
+  background: var(--bg-page);
   line-height: 1.6;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans",
-               "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, "Helvetica Neue",
-               Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo,
+    "Helvetica Neue", Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
 }
 
-/* ========== 注意事項（notice-block） ========== */
-/* 2枚目のように本文幅で中央に箱を置く。左にアクセントカラー。 */
-.notice-block{
-  max-width: 920px;
-  margin: 16px auto 8px;        /* 上余白を少し、下はフォームにつなげる */
-  padding: 12px 16px;
-  background: var(--c-panel);
-  border: 1px solid var(--c-panel-border);
-  border-left: 4px solid var(--c-primary);
-  border-radius: var(--radius);
+/* ===== Notice（ご注意事項）— 枠・面色なし =============================== */
+.notice-block {
+  margin: 16px 0 12px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-left: 0;
+  border-radius: 0;
 }
-.notice-block hr{
-  border: none;
-  border-top: 1px dashed var(--c-panel-border);
-  margin: 8px 0;
+.notice-block hr {
+  display: none;  /* 罫線も不要なら非表示（必要なら削除） */
 }
-.notice-block p{
+.notice-block p {
   margin: 6px 0;
   font-size: 14px;
-  color: #374151;
+  color: #000;
 }
 
-/* ========== コンテナ（フォーム全体の箱） ========== */
+/* ===== Form wrapper ===================================================== */
 .crmWebToEntityForm {
-  max-width: 920px;             /* 2枚目の幅感に寄せる */
-  margin: 12px auto 48px;       /* 注意事項の直後に続く */
+  max-width: 920px;
+  margin: 0 auto 48px;
   padding: var(--space-5);
-  background: var(--c-panel);
-  border: 1px solid var(--c-panel-border);
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: 0 1px 2px rgba(16,24,40,.04);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
 }
-
-/* ========== 見出し・テキスト ========== */
-.zcwf_title { font-weight: 700; margin: 0 0 var(--space-2); }
+.zcwf_text {
+  color: var(--text-dark);
+  font-size: 14px;
+}
+.zcwf_title {
+  font-weight: 700;
+  margin: 0 0 var(--space-2);
+}
 .group-title {
   font-size: 18px;
   font-weight: 600;
   margin: var(--space-5) var(--space-1) var(--space-2);
   padding-left: 8px;
-  border-left: 3px solid var(--c-primary); /* セクション見出しのアクセント */
+  border-left: 3px solid var(--brand);
 }
-.zcwf_text { color: var(--c-muted); font-size: 14px; }
 
-/* ========== 行レイアウト（左ラベル / 右フィールド） ========== */
-.zcwf_row { margin: var(--space-4) 0; }
-.zcwf_row::after, .zcwf_col_fld::after { content: ""; display: table; clear: both; }
-
+/* ===== Rows（左ラベル/右入力） ========================================= */
+.zcwf_row {
+  margin: 22px 0;
+}
+.zcwf_row::after,
+.zcwf_col_fld::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .zcwf_col_lab {
   float: left;
   width: 30%;
@@ -105,11 +121,11 @@ html, body {
   float: left;
   width: 68%;
   padding: 0 var(--space-1);
-  position: relative;
   margin-top: 5px;
+  position: relative;
 }
 
-/* ========== 入力要素の共通スタイル（サイズは変更しない） ========== */
+/* ===== Controls ========================================================= */
 .zcwf_col_fld input[type="text"],
 .zcwf_col_fld input[type="email"],
 .zcwf_col_fld input[type="url"],
@@ -119,10 +135,10 @@ html, body {
   width: var(--field-width);
   height: var(--field-height);
   padding: var(--space-3);
-  border: 1px solid var(--c-border) !important;
+  border: 1px solid var(--line) !important;
   border-radius: var(--radius);
   background: #fff;
-  color: var(--c-text);
+  color: var(--text-main);
   outline: none;
   transition: border-color .15s ease, box-shadow .15s ease;
   appearance: none;
@@ -131,48 +147,133 @@ html, body {
   width: var(--field-width);
   min-height: 140px;
   padding: var(--space-3);
-  border: 1px solid var(--c-border) !important;
+  border: 1px solid var(--line) !important;
   border-radius: var(--radius);
   background: #fff;
-  color: var(--c-text);
+  color: var(--text-main);
   outline: none;
   transition: border-color .15s ease, box-shadow .15s ease;
-  float: none;       /* 下のカウンタと縦並びに */
+  float: none;
   display: block;
 }
 .zcwf_col_fld input:focus,
 .zcwf_col_fld select:focus,
 .zcwf_col_fld textarea:focus {
-  border-color: var(--c-border-strong) !important;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.03) inset;
+  border-color: var(--line-strong) !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .03) inset;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-light);
 }
 .redBorder {
-  border-color: var(--c-danger) !important;
-  box-shadow: 0 0 0 1px var(--c-danger) inset;
+  border-color: #cf566b !important;
+  box-shadow: 0 0 0 1px #cf566b inset;
 }
 
-/* ========== 文字数カウンタ ========== */
+/* ===== 必須バッジ ==================== */
+/* - 入力要素に required/aria-required が付く場合
+   - ラベル側の赤い「＊」で必須を表す場合（Zoho）も検知 */
+:is(
+  .zcwf_col_fld:has(> :is(input, select, textarea)[required]),
+  .zcwf_col_fld:has(> :is(input, select, textarea)[aria-required="true"]),
+  .zcwf_row:has(.zcwf_col_lab label span[style*="red"]) .zcwf_col_fld
+) {
+  padding-top: 16px;
+}
+:is(
+  .zcwf_col_fld:has(> :is(input, select, textarea)[required]),
+  .zcwf_col_fld:has(> :is(input, select, textarea)[aria-required="true"]),
+  .zcwf_row:has(.zcwf_col_lab label span[style*="red"]) .zcwf_col_fld
+)::before {
+  content: "必須";
+  position: absolute;
+  left: 0;
+  top: -4px;
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 1;
+  color: #fff;
+  background: var(--accent-pink);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== 文字数カウンタ ==================================================== */
 .help-counter {
-  display: block;                /* テキストエリアの下段に表示 */
+  display: block;
   width: var(--field-width);
   text-align: right;
   margin-top: var(--space-1);
   font-size: 12px;
-  color: var(--c-muted);
+  color: var(--text-dark);
 }
 
-/* ========== ラジオ（はい / いいえ）行の最適化 ========== */
-fieldset { border: 0; margin: 0 0 var(--space-4); padding: 0; }
-fieldset .zcwf_col_lab { display: flex; align-items: center; margin-top: 5px; }
-fieldset .zcwf_col_fld { display: flex; align-items: center; gap: var(--space-4); }
-.radio-inline { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; }
+/* ===== はい/いいえ（四角ラジオ） ======================================== */
+fieldset {
+  border: 0;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+}
+fieldset .zcwf_col_lab {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+fieldset .zcwf_col_fld {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: 12px;
+}
+.radio-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+.radio-inline input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--line);
+  border-radius: 3px;
+  background: #fff;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+.radio-inline input[type="radio"]:hover {
+  border-color: var(--line-strong);
+}
+.radio-inline input[type="radio"]:focus {
+  outline: 2px solid rgba(10, 120, 108, .18);
+  outline-offset: 1px;
+}
+.radio-inline input[type="radio"]:checked {
+  border-color: var(--brand);
+  background: var(--brand);
+}
+.radio-inline input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
 
-/* ========== ボタン ========== */
-/* 既定（グレー）：「フォームをクリア」など */
-.zcwf_button{
+/* ===== Buttons =========================================================== */
+.zcwf_button {
   font-size: 14px;
   padding: 10px 16px;
-  border: 1px solid var(--c-panel-border);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   background: #eef1ed;
   color: #334155;
@@ -181,38 +282,52 @@ fieldset .zcwf_col_fld { display: flex; align-items: center; gap: var(--space-4)
   white-space: nowrap;
   transition: background-color .15s ease, border-color .15s ease, transform .02s ease;
 }
-.zcwf_button:hover{
+.zcwf_button:hover {
   background: #e4e8e3;
 }
-.zcwf_button:active{ transform: translateY(1px); }
-
-/* 送信ボタン（緑） */
-.formsubmit.zcwf_button{
+.zcwf_button:active {
+  transform: translateY(1px);
+}
+.formsubmit.zcwf_button {
   color: #fff !important;
-  background: var(--c-primary);
-  border-color: var(--c-primary);
+  background: var(--brand);
+  border-color: var(--brand);
 }
-.formsubmit.zcwf_button:hover{
-  background: var(--c-primary-2);
-  border-color: var(--c-primary-2);
+.formsubmit.zcwf_button:hover {
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
 }
 
-/* ========== 補助要素 ========== */
-.zcwf_col_help {
-  float: left;
-  margin-left: 7px;
-  font-size: 12px;
-  max-width: 35%;
-  word-break: break-word;
-  color: var(--c-muted);
+/* ボタン間隔（行共通 & 確認画面） */
+.zcwf_col_fld .zcwf_button {
+  margin-right: 28px;
 }
-.zcwf_ckbox { float: left; }
+.zcwf_col_fld .zcwf_button:last-child {
+  margin-right: 0;
+}
+.confirm-actions .zcwf_button {
+  margin-right: 28px;
+}
+.confirm-actions .zcwf_button:last-child {
+  margin-right: 0;
+}
 
-.field-error { display: none; color: var(--c-danger); font-size: 12px; margin-top: 4px; }
-.field-error.open { display: inline-block; }
+/* ==== セクションの区切り線 ============================================== */
+.section-divider {
+  display: block;
+  height: 1px;
+  border: 0;
+  background: var(--line);
+  margin: 12px 0 20px;
+}
 
-/* ========== 送信完了ブロック ========== */
-.zcwf_ty-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: none; }
+/* ===== 送信完了ブロック ================================================== */
+.zcwf_ty-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .4);
+  display: none;
+}
 .zcwf_ty {
   position: fixed;
   left: 50%;
@@ -224,36 +339,70 @@ fieldset .zcwf_col_fld { display: flex; align-items: center; gap: var(--space-4)
   min-width: 320px;
   max-width: 90vw;
   display: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
 }
-.zcwf_ty .transComp { display: flex; align-items: center; gap: 6px; font-weight: 700; margin-bottom: var(--space-2); }
+.zcwf_ty .transComp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
 
-/* ========== 確認セクション（確認画面用） ========== */
-.confirm-section { margin-top: 8px; }
-.confirm-list { display:block; margin: 0; padding: 0; }
-.confirm-row { display:flex; gap:10px; margin:12px 0; }
+/* ===== 確認セクション（確認画面） ======================================= */
+.confirm-section {
+  margin-top: 8px;
+}
+.confirm-note {
+  margin: 4px 0 12px;
+  font-size: 13px;
+  color: var(--text-dark);
+}
+.confirm-list {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+/* 行全体で区切り線*/
+.confirm-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.confirm-row:last-child {
+  border-bottom: none;
+}
 .confirm-row dt {
   width: 30%;
   margin: 0;
-  padding: 0 6px;
+  padding: 0 6px 0 0;
   font-weight: 600;
   word-break: break-word;
+  color: var(--text-main);
 }
 .confirm-row dd {
   width: 68%;
+  line-height: 1.9;
+  letter-spacing: .02em;
   margin: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius);
-  background: #f9fbfc;
-  white-space: pre-wrap;  /* 改行保持 */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  white-space: pre-wrap;
   word-break: break-word;
+  color: var(--text-main);
 }
 
-/* ========== レスポンシブ（モバイル） ========== */
+/* ===== Responsive（600px以下） ========================================= */
 @media (max-width: 600px) {
   .zcwf_col_lab,
-  .zcwf_col_fld { width: auto; float: none !important; }
+  .zcwf_col_fld {
+    width: auto;
+    float: none !important;
+  }
 
   .zcwf_col_fld input[type="text"],
   .zcwf_col_fld input[type="email"],
@@ -262,11 +411,30 @@ fieldset .zcwf_col_fld { display: flex; align-items: center; gap: var(--space-4)
   .zcwf_col_fld input[type="password"],
   .zcwf_col_fld select,
   .zcwf_col_fld textarea,
-  .help-counter { width: 100%; }
+  .help-counter {
+    width: 100%;
+  }
 
-  fieldset .zcwf_col_fld { gap: var(--space-3); }
+  fieldset .zcwf_col_fld {
+    gap: var(--space-3);
+  }
 
-  /* 余白の最適化（モバイル幅で左右に少し余白） */
   .notice-block,
-  .crmWebToEntityForm { margin-left: 12px; margin-right: 12px; }
+  .crmWebToEntityForm {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  /* 画面が狭い時は縦に積んでタップしやすく */
+  .zcwf_col_fld:has(> .zcwf_button) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .confirm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
 }
