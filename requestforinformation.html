@@ -7,8 +7,6 @@
 
   <!-- ▼ローカルCSS -->
   <link rel="stylesheet" href="./styles/form.css" />
-  <!-- ▼本番用CDN（残すが無効化） -->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/C-Live-coporat/hospitouch_webform_public@main/styles/form.css" /> -->
 
   <!-- 任意：送信完了ブロックで使用 -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -17,10 +15,7 @@
 
   <!-- ===== セクション：入力フォーム（注意事項を内包） ===== -->
   <div id="crmWebToEntityForm" class="zcwf_lblLeft crmWebToEntityForm" style="max-width:800px;">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="content-type" content="text/html;charset=SHIFT-JIS">
 
-    
     <section class="notice-block" style="margin-top:0;">
       <h2 class="zcwf_title">ご注意事項</h2>
       <hr />
@@ -40,7 +35,6 @@
       action="https://crm.zoho.com/crm/WebToLeadForm"
       name="WebToLeads5103321000002008018"
       method="POST"
-      onsubmit='javascript:document.charset="UTF-8"; return checkMandatory5103321000002008018()'
       accept-charset="UTF-8"
     >
       <!-- Zoho hidden -->
@@ -121,7 +115,7 @@
 
         <h3 class="group-title">お問い合わせ内容</h3>
 
-        <!-- 行：問い合わせ種別（-None-を廃止。空値プレースホルダー） -->
+        <!-- 行：問い合わせ種別 -->
         <div class="zcwf_row">
           <div class="zcwf_col_lab">
             <label for="LEADCF1">お問い合わせの内容を選択してください<span style="color:red;">*</span></label>
@@ -137,7 +131,6 @@
                     aria-label="LEADCF1"
                     name="LEADCF1">
               <option value="" disabled selected hidden>選択してください</option>
-              <!-- 値は要求どおり既存のまま -->
               <option value="&#x8cc7;&#x6599;&#x8acb;&#x6c42;">&#x8cc7;&#x6599;&#x8acb;&#x6c42;</option>
               <option value="&#x4e00;&#x5ea6;&#x30aa;&#x30f3;&#x30e9;&#x30a4;&#x30f3;&#x3067;&#x76f8;&#x8ac7;&#x3092;&#x3057;&#x305f;&#x3044;&#xff08;&#x7121;&#x6599;&#xff09;">&#x4e00;&#x5ea6;&#x30aa;&#x30f3;&#x30e9;&#x30a4;&#x30f3;&#x3067;&#x76f8;&#x8ac7;&#x3092;&#x3057;&#x305f;&#x3044;&#xff08;&#x7121;&#x6599;&#xff09;</option>
               <option value="&#x30c7;&#x30e2;&#x753b;&#x9762;&#x3092;&#x898b;&#x305f;&#x3044;">&#x30c7;&#x30e2;&#x753b;&#x9762;&#x3092;&#x898b;&#x305f;&#x3044;</option>
@@ -217,7 +210,5 @@
 
   <!-- ▼ローカルJS（ESM） -->
   <script src="./scripts/requestforInformation.js" type="module"></script>
-  <!-- ▼本番用CDN（残すが無効化） -->
-  <!-- <script src="https://cdn.jsdelivr.net/gh/C-Live-coporat/hospitouch_webform_public@main/scripts/requestforInformation.js" type="module"></script> -->
 </body>
 </html>
