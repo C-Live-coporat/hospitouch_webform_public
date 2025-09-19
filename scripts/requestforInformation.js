@@ -33,9 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
     phoneSelector:        "#Phone",
     phoneErrorSelector:   "#phone-error", // HTML側に <small id="phone-error">... を置いてください
 
-    smarturl: { paramKey: "service", expected: "smarturl" },
+    // select の aria-selected を補助（Zoho互換）
+    selectAriaIds: ["LEADCF1"],
 
-    // 追加：はい/いいえ必須 ＋ 電話番号の国内/国際チェック
+    // 追加：はい/いいえ必須 ＋ 電話番号の国内/国際チェック（※ハイフン必須）
     extraValidate: () => {
       // 1) はい/いいえ（ラジオ）の必須
       const radios = document.querySelectorAll('input[name="first_time"]');
@@ -45,13 +46,23 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
       }
 
-      // 2) 電話番号の日本向けルール
+      // 2) 電話番号の日本向けルール（ハイフン必須）
       const phoneEl = document.getElementById("Phone");
       const errEl   = document.getElementById("phone-error");
       const raw     = (phoneEl?.value || "").trim();
 
       // 許可：半角数字・ハイフン・空白・+ のみ（他は弾く）
       const allowed = /^[0-9+\-\s]+$/.test(raw);
+      // 追加：ハイフン必須
+      const hasHyphen = raw.includes("-");
+      if (allowed && !hasHyphen) {
+        phoneEl?.classList.add("redBorder");
+        if (errEl) errEl.classList.add("open");
+        alert("電話番号には必ずハイフン（-）を含めて入力してください。\n例：03-1234-5678 / 090-1234-5678 / +81-3-1234-5678");
+        phoneEl?.focus();
+        return false;
+      }
+
       // 正規化：区切りを除外
       const noSep   = raw.replace(/[\s-]/g, "");
       const digits  = noSep.replace(/\D/g, ""); // 数字だけ
@@ -127,29 +138,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // はい/いいえ
     const r = document.querySelector('input[name="first_time"]:checked');
-    $("conf-first_time").textContent = r ? (r.value === "yes" ? "はい" : "いいえ") : "";
+    document.getElementById("conf-first_time").textContent = r ? (r.value === "yes" ? "はい" : "いいえ") : "";
 
-    $("conf-Email").textContent     = $("Email")?.value || "";
-    $("conf-LEADCF2").textContent   = $("LEADCF2")?.value || "";
-    $("conf-Company").textContent   = $("Company")?.value || "";
-    $("conf-Last_Name").textContent = $("Last_Name")?.value || "";
-    $("conf-Website").textContent   = $("Website")?.value || "";
-    $("conf-Phone").textContent     = $("Phone")?.value || "";
+    document.getElementById("conf-Email").textContent     = document.getElementById("Email")?.value || "";
+    document.getElementById("conf-LEADCF2").textContent   = document.getElementById("LEADCF2")?.value || "";
+    document.getElementById("conf-Company").textContent   = document.getElementById("Company")?.value || "";
+    document.getElementById("conf-Last_Name").textContent = document.getElementById("Last_Name")?.value || "";
+    document.getElementById("conf-Website").textContent   = document.getElementById("Website")?.value || "";
+    document.getElementById("conf-Phone").textContent     = document.getElementById("Phone")?.value || "";
 
-    const sel = $("LEADCF1");
-    $("conf-LEADCF1").textContent   = sel?.selectedOptions?.[0]?.textContent || "";
+    const sel = document.getElementById("LEADCF1");
+    document.getElementById("conf-LEADCF1").textContent   = sel?.selectedOptions?.[0]?.textContent || "";
 
-    $("conf-Description").textContent = $("Description")?.value || "";
+    document.getElementById("conf-Description").textContent = document.getElementById("Description")?.value || "";
   }
 
   goConfirmBtn?.addEventListener("click", () => {
     // 入力チェック（ここで送信はしない）
     if (!doValidate()) return;
 
-    // initFormValidation が「送信する」ボタンを disabled にしているので、確認画面用に一旦解除
-    finalBtn?.removeAttribute("disabled");
-
+    // 確認画面へ値を転記
     fillConfirm();
+
+    // 画面切り替え
     editSection.style.display = "none";
     confirmSection.style.display = "block";
     window.scrollTo({ top: 0, behavior: "smooth" });
