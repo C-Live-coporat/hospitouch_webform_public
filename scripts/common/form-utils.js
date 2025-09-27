@@ -204,10 +204,11 @@ export function initFormValidation(config) {
     if (typeof extraValidate === "function" && !extraValidate()) return false;
 
     addSmartUrlHiddenIfNeeded(formId, smarturl.paramKey, smarturl.expected);
-    disableSubmit(submitBtnSelector);
+    // disableSubmit(submitBtnSelector);
     return true;
   }
 
   return doValidate;
 }
+
 
