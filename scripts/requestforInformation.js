@@ -1,172 +1,178 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ほすぴタッチ｜お問い合わせ・資料請求フォーム</title>
+// scripts/requestforInformation.js
+import { initFormValidation, attachSelectAriaSelected } from "./common/form-utils.js";
 
-  <!-- ▼ローカルCSS -->
-  <link rel="stylesheet" href="./styles/form.css" />
+const ZOHO_FORM_NAME = "WebToLeads5103321000002008018";
+const ZOHO_FORM_ID   = "webform5103321000002008018";
 
-  <!-- 任意：送信完了ブロックで使用 -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-</head>
-<body>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById(ZOHO_FORM_ID);
+  const editSection = document.getElementById("editSection");
+  const confirmSection = document.getElementById("confirmSection");
+  const goConfirmBtn = document.getElementById("goConfirmBtn");
+  const backBtn = document.getElementById("backToEditBtn");
+  const finalBtn = document.getElementById("submitFinalBtn");
 
-  <!-- ===== セクション：入力フォーム（注意事項を内包） ===== -->
-  <main class="container">
+  // ===== バリデーション初期化 =====
+  const doValidate = initFormValidation({
+    formId:   ZOHO_FORM_ID,
+    formName: ZOHO_FORM_NAME,
 
-    <h1 class="title">お問い合わせ・資料請求フォーム</h1>
+    requiredNames:  ["Company", "Last Name", "Email", "Phone", "Website", "LEADCF1", "LEADCF2"],
+    requiredLabels: [
+      "法人名・団体名",
+      "ご担当者さま氏名",
+      "メールアドレス",
+      "電話番号",
+      "貴社のWebサイトURL",
+      "お問い合わせの内容を選択してください",
+      "メールアドレス（再入力）"
+    ],
 
-    <section class="notice">
-      <h2>ご入力前のご案内</h2>
-      <p>［１］　こちらのフォームに必要事項をご入力のうえ［送信］してください。</p>
-      <p>［２］　メールアドレスはお間違いのないようにご入力ください。メールアドレスが間違っていました場合、弊社からのメールが届きません。</p>
-      <p>［３］　［ c-live.jp ］のドメインが受信できるように（迷惑メール扱いにならないよう）お願いいたします。</p>
-      <p>［４］　カタログや見積書等のご郵送は対応しておりませんので何卒ご了承くださいませ。</p>
-      <hr />
-    </section>
+    emailSelector:        "#Email",
+    emailConfirmSelector: "#LEADCF2",
+    phoneSelector:        "#Phone",
+    phoneErrorSelector:   "#phone-error", // HTML側に <small id="phone-error">... を置いてください
 
-    <p class="zcwf_text" style="margin-top:0;">＊は必須項目です</p>
+    // select の aria-selected を補助（Zoho互換）
+    selectAriaIds: ["LEADCF1"],
 
-    <hr class="section-divider">
+    // 追加：はい/いいえ必須 ＋ 電話番号の国内/国際チェック（※ハイフン必須）
+    extraValidate: () => {
+      // 1) はい/いいえ（ラジオ）の必須
+      const radios = document.querySelectorAll('input[name="first_time"]');
+      const checked = Array.from(radios).some(r => r.checked);
+      if (!checked) {
+        alert("フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。");
+        return false;
+      }
 
-    <form
-      id="webform5103321000002008018"
-      action="https://crm.zoho.com/crm/WebToLeadForm"
-      name="WebToLeads5103321000002008018"
-      method="POST"
-      accept-charset="UTF-8"
-      onsubmit="return checkMandatory5103321000002008018()"
-    >
-      <!-- Zoho hidden -->
-      <input type="text" style="display:none;" name="xnQsjsdp" value="***（元の値そのまま）***" />
-      <input type="hidden" name="zc_gad" id="zc_gad" value="" />
-      <input type="text" style="display:none;" name="xmIwtLD" value="***（元の値そのまま）***" />
-      <input type="text" style="display:none;" name="actionType" value="TGVhZHM=" />
-      <!-- 送信後のサンクスURL -->
-      <input type="text" style="display:none;" name="returnURL" value="https&#x3a;&#x2f;&#x2f;test.hospi.ai&#x2f;transmission-completed&#x2f;" />
+      // 2) 電話番号の日本向けルール（ハイフン必須）
+      const phoneEl = document.getElementById("Phone");
+      const errEl   = document.getElementById("phone-error");
+      const raw     = (phoneEl?.value || "").trim();
 
-      <!-- ====== 入力ブロック ====== -->
-      <section id="editSection">
-        <!-- 初回かどうか（UIはラジオだが Zoho の LEADCF258 に同期させるための hidden checkbox を利用） -->
-        <div class="form-row">
-          <label class="form-label">初めての資料請求・お問い合わせ<span class="req">*</span></label>
-          <div class="form-field">
-            <label><input type="radio" name="first_time" value="yes" /> はい</label>
-            <label><input type="radio" name="first_time" value="no"  /> いいえ</label>
-            <!-- Zoho 必須チェックボックス（JSで同期） -->
-            <input type="checkbox" id="LEADCF258" name="LEADCF258" class="visually-hidden" />
-          </div>
-        </div>
+      // 許可：半角数字・ハイフン・空白・+ のみ（他は弾く）
+      const allowed = /^[0-9+\-\s]+$/.test(raw);
+      // 追加：ハイフン必須
+      const hasHyphen = raw.includes("-");
+      if (allowed && !hasHyphen) {
+        phoneEl?.classList.add("redBorder");
+        if (errEl) errEl.classList.add("open");
+        alert("電話番号には必ずハイフン（-）を含めて入力してください。\n例：03-1234-5678 / 090-1234-5678 / +81-3-1234-5678");
+        phoneEl?.focus();
+        return false;
+      }
 
-        <div class="form-row">
-          <label for="Email" class="form-label">メールアドレス<span class="req">*</span></label>
-          <div class="form-field"><input type="email" id="Email" name="Email" maxlength="100" autocomplete="email" /></div>
-        </div>
+      // 正規化：区切りを除外
+      const noSep   = raw.replace(/[\s-]/g, "");
+      const digits  = noSep.replace(/\D/g, ""); // 数字だけ
 
-        <div class="form-row">
-          <label for="LEADCF2" class="form-label">メールアドレス（再入力）<span class="req">*</span></label>
-          <div class="form-field"><input type="email" id="LEADCF2" name="LEADCF2" maxlength="100" autocomplete="email" /></div>
-        </div>
+      let ok = false;
 
-        <div class="form-row">
-          <label for="Company" class="form-label">法人名・団体名<span class="req">*</span></label>
-          <div class="form-field"><input type="text" id="Company" name="Company" maxlength="200" /></div>
-        </div>
+      if (allowed) {
+        if (noSep.startsWith("+")) {
+          // 国際形式：E.164目安（+ と 8〜15桁）
+          ok = /^\+[1-9]\d{7,14}$/.test(noSep);
+        } else {
+          // 国内形式：先頭 0、数字合計 10〜11 桁
+          ok = digits.startsWith("0") && (digits.length === 10 || digits.length === 11);
+        }
+      }
 
-        <div class="form-row">
-          <label for="Last_Name" class="form-label">ご担当者さま氏名<span class="req">*</span></label>
-          <div class="form-field"><input type="text" id="Last_Name" name="Last Name" maxlength="80" /></div>
-        </div>
+      phoneEl?.classList.toggle("redBorder", !ok);
+      if (errEl) errEl.classList.toggle("open", !ok);
 
-        <div class="form-row">
-          <label for="Website" class="form-label">法人・団体さまのホームぺージURL<span class="req">*</span></label>
-          <div class="form-field"><input type="url" id="Website" name="Website" maxlength="255" placeholder="https://example.com" /></div>
-        </div>
+      if (!ok) {
+        alert("電話番号の形式が正しくありません。\n国内は「0」始まりで数字合計10〜11桁、または国際形式（+81 〜）で入力してください。");
+        phoneEl?.focus();
+        return false;
+      }
+      return true;
+    },
 
-        <div class="form-row">
-          <label for="Phone" class="form-label">電話番号（ハイフンアリ）<span class="req">*</span></label>
-          <div class="form-field">
-            <input type="text" id="Phone" name="Phone" maxlength="30" />
-            <small id="phone-error" class="error-msg">電話番号の形式が正しくありません</small>
-          </div>
-        </div>
+    // 二重送信防止の対象ボタンは「送信する」に限定
+    submitBtnSelector: "#submitFinalBtn",
+  });
 
-        <div class="form-row">
-          <label for="LEADCF1" class="form-label">お問い合わせの内容を選択してください<span class="req">*</span></label>
-          <div class="form-field">
-            <select id="LEADCF1" name="LEADCF1" onchange="addAriaSelected5103321000002008018()">
-              <option value="-None-">-None-</option>
-              <option value="資料請求">資料請求</option>
-              <option value="一度オンラインで相談をしたい（無料）">一度オンラインで相談をしたい（無料）</option>
-              <option value="デモ画面を見たい">デモ画面を見たい</option>
-              <option value="トライアルがしたい（有償）">トライアルがしたい（有償）</option>
-              <option value="見積のご依頼">見積のご依頼</option>
-              <option value="一度電話が欲しい">一度電話が欲しい</option>
-              <option value="その他">その他</option>
-            </select>
-          </div>
-        </div>
+  // Zoho の onsubmit="return checkMandatory...()" 互換
+  window.checkMandatory5103321000002008018 = doValidate;
 
-        <div class="form-row">
-          <label for="Description" class="form-label">ご要望等ございましたら、ご記入ください。（1500文字以内）</label>
-          <div class="form-field">
-            <textarea id="Description" name="Description"></textarea>
-            <div class="char-counter">現在 <span id="desc-count">0</span> 文字</div>
-          </div>
-        </div>
+  // Zoho互換 aria-selected（セレクト）
+  window.addAriaSelected5103321000002008018 = function () {
+    attachSelectAriaSelected("LEADCF1");
+    const sel = document.getElementById("LEADCF1");
+    if (sel) {
+      const prev = sel.querySelector("[aria-selected=true]");
+      if (prev) prev.removeAttribute("aria-selected");
+      sel.options[sel.selectedIndex].ariaSelected = "true";
+    }
+  };
 
-        <!-- 蜜壺対策 -->
-        <input type="text" style="display:none;" name="aG9uZXlwb3Q" value=""/>
+  // ラジオ（はい/いいえ）→ Zohoのcheckbox(LEADCF258)に同期
+  (function syncFirstTimeToZoho(){
+    const hiddenZohoCheckbox = document.getElementById("LEADCF258");
+    const radios = document.querySelectorAll('input[name="first_time"]');
+    if (!hiddenZohoCheckbox || radios.length === 0) return;
+    radios.forEach(r => {
+      r.addEventListener("change", e => {
+        hiddenZohoCheckbox.checked = (e.target.value === "yes"); // はい=true、いいえ=false
+      });
+    });
+  })();
 
-        <div class="actions">
-          <button type="button" id="goConfirmBtn" class="btn primary">確認へ進む</button>
-        </div>
-      </section>
+  // 文字数カウンタ（IME・貼付対応）
+  (function setupCounter(){
+    const ta  = document.getElementById("Description");
+    const cnt = document.getElementById("desc-count");
+    if (!ta || !cnt) return;
+    const update = () => { cnt.textContent = String(ta.value.length); };
+    ["input","keyup","change","paste","cut","compositionend"].forEach(ev =>
+      ta.addEventListener(ev, update)
+    );
+    update();
+  })();
 
-      <!-- ====== 確認画面 ====== -->
-      <section id="confirmSection" style="display:none;">
-        <h2>入力内容の確認</h2>
-        <dl class="confirm-list">
-          <dt>初めての資料請求・お問い合わせ</dt><dd id="conf-first_time"></dd>
-          <dt>メールアドレス</dt><dd id="conf-Email"></dd>
-          <dt>メールアドレス（再入力）</dt><dd id="conf-LEADCF2"></dd>
-          <dt>法人名・団体名</dt><dd id="conf-Company"></dd>
-          <dt>ご担当者さま氏名</dt><dd id="conf-Last_Name"></dd>
-          <dt>ホームページURL</dt><dd id="conf-Website"></dd>
-          <dt>電話番号</dt><dd id="conf-Phone"></dd>
-          <dt>お問い合わせ内容</dt><dd id="conf-LEADCF1"></dd>
-          <dt>ご要望等</dt><dd id="conf-Description" class="prewrap"></dd>
-        </dl>
+  // ====== 確認画面へ ======
+  function fillConfirm() {
+    const $ = (id) => document.getElementById(id);
 
-        <div class="actions">
-          <button type="button" id="backToEditBtn" class="btn">修正する</button>
-          <!-- ここが最終送信ボタン（type="submit"） -->
-          <button type="submit" id="submitFinalBtn" class="btn primary">送信する</button>
-        </div>
-      </section>
+    // はい/いいえ
+    const r = document.querySelector('input[name="first_time"]:checked');
+    document.getElementById("conf-first_time").textContent = r ? (r.value === "yes" ? "はい" : "いいえ") : "";
 
-      <!-- Zoho Analytics -->
-      <script id="wf_anal" src="https://crm.zohopublic.com/crm/WebFormAnalyticsServeServlet?rid=***省略***"></script>
-    </form>
+    document.getElementById("conf-Email").textContent     = document.getElementById("Email")?.value || "";
+    document.getElementById("conf-LEADCF2").textContent   = document.getElementById("LEADCF2")?.value || "";
+    document.getElementById("conf-Company").textContent   = document.getElementById("Company")?.value || "";
+    document.getElementById("conf-Last_Name").textContent = document.getElementById("Last_Name")?.value || "";
+    document.getElementById("conf-Website").textContent   = document.getElementById("Website")?.value || "";
+    document.getElementById("conf-Phone").textContent     = document.getElementById("Phone")?.value || "";
 
-    <hr class="section-divider" />
+    const sel = document.getElementById("LEADCF1");
+    document.getElementById("conf-LEADCF1").textContent   = sel?.selectedOptions?.[0]?.textContent || "";
 
-    <section class="privacy">
-      <h2>個人情報の取り扱いについて</h2>
-      <p>当社の個人情報保護方針に基づき、適切に取り扱います。</p>
-    </section>
+    document.getElementById("conf-Description").textContent = document.getElementById("Description")?.value || "";
+  }
 
-    <!-- 送信完了のスタブ（サーバー側リダイレクト後に表示されます） -->
-    <section id="thanks" class="thanks" style="display:none;">
-      <span class="material-icons">check_circle</span>
-      <p>送信が完了しました。ありがとうございました。</p>
-    </section>
+  goConfirmBtn?.addEventListener("click", () => {
+    // 入力チェック（ここで送信はしない）
+    if (!doValidate()) return;
 
-  </main>
+    // 確認画面へ値を転記
+    fillConfirm();
 
-  <!-- ESModule -->
-  <script type="module" src="./scripts/requestforInformation.js"></script>
-</body>
-</html>
+    // 画面切り替え
+    editSection.style.display = "none";
+    confirmSection.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // 修正に戻る
+  backBtn?.addEventListener("click", () => {
+    confirmSection.style.display = "none";
+    editSection.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // 送信確定（type="submit" なので通常どおり Zoho にPOST）
+  // → 追加コードは不要（window.checkMandatory... が発火）
+});
