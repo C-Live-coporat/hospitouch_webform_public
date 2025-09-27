@@ -151,5 +151,59 @@
   </div>
 
   <script src="./scripts/requestforInformation.debug.2step.js" defer></script>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('webform5103321000002008018');
+  const editSection = document.getElementById('editSection');
+  const confirmSection = document.getElementById('confirmSection');
+  const goConfirmBtn = document.getElementById('goConfirmBtn');
+  const backBtn = document.getElementById('backToEditBtn');
+  const finalBtn = document.getElementById('submitFinalBtn');
+
+  // Zoho の onsubmit フックは常に通す
+  window.checkMandatory5103321000002008018 = () => true;
+
+  function txt(id){ const el=document.getElementById(id); return el?el.value:''; }
+  function set(id,v){ const el=document.getElementById(id); if(el) el.textContent=v||''; }
+
+  goConfirmBtn?.addEventListener('click', () => {
+    const r = document.querySelector('input[name="first_time"]:checked');
+    set('conf-first_time', r ? (r.value === 'yes' ? 'はい' : 'いいえ') : '');
+    set('conf-Email', txt('Email'));
+    set('conf-LEADCF2', txt('LEADCF2'));
+    set('conf-Company', txt('Company'));
+    set('conf-Last_Name', txt('Last_Name'));
+    set('conf-Website', txt('Website'));
+    set('conf-Phone', txt('Phone'));
+    const sel = document.getElementById('LEADCF1');
+    set('conf-LEADCF1', sel && sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : '');
+    set('conf-Description', txt('Description'));
+
+    editSection.style.display = 'none';
+    confirmSection.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  backBtn?.addEventListener('click', () => {
+    confirmSection.style.display = 'none';
+    editSection.style.display = 'block';
+  });
+
+  finalBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    // はい/いいえ → LEADCF258 同期
+    const r  = document.querySelector('input[name="first_time"]:checked');
+    const cb = document.getElementById('LEADCF258');
+    if (cb) cb.checked = !!(r && r.value === 'yes');
+
+    // 念のためネイティブ検証OFF
+    form.setAttribute('novalidate', 'novalidate');
+
+    // 確実にPOST
+    setTimeout(() => form.submit(), 0);
+  });
+});
+</script>
+
 </body>
 </html>
