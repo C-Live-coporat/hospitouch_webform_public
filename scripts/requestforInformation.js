@@ -173,6 +173,23 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
+  // 送信（確認画面の「送信する」）
+  finalBtn?.addEventListener("click", (e) => {
+    e.preventDefault(); // 既定のsubmitは止める（ネイティブ検証の影響を完全排除）
+
+    // はい/いいえ → Zohoのhiddenチェックボックスへ同期（はい=true）
+    const r  = document.querySelector('input[name="first_time"]:checked');
+    const cb = document.getElementById("LEADCF258");
+    if (cb) cb.checked = !!(r && r.value === "yes");
+
+    // 念押しでHTML5検証をOFF
+    form.setAttribute("novalidate", "novalidate");
+
+    // 確実にPOST
+    form.submit();
+  });
+
   // 送信確定（type="submit" なので通常どおり Zoho にPOST）
   // → 追加コードは不要（window.checkMandatory... が発火）
 });
+
