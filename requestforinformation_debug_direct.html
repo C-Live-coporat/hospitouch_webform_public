@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ほすぴタッチ｜お問い合わせ・資料請求フォーム（直送デバッグ）</title>
+  <link rel="stylesheet" href="./styles/form.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+<body>
+  <div id="crmWebToEntityForm" class="zcwf_lblLeft crmWebToEntityForm" style="max-width:800px;">
+    <h2 class="zcwf_title" style="margin-top:0;">直送デバッグ用（確認画面なし）</h2>
+    <p class="zcwf_text" style="margin-top:0;">＊は必須項目です</p>
+    <hr class="section-divider">
+
+    <form
+      id="webform5103321000002008018"
+      action="https://crm.zoho.com/crm/WebToLeadForm"
+      name="WebToLeads5103321000002008018"
+      method="POST"
+      accept-charset="UTF-8"
+      onsubmit="return checkMandatory5103321000002008018()"
+      novalidate
+    >
+      <!-- Zoho hidden -->
+      <input type="text" style="display:none;" name="xnQsjsdp" value="c2997d2720d9247b42664f8fc8bf2337b42e066f31197db47f7732403ad38b27" />
+      <input type="hidden" name="zc_gad" id="zc_gad" value="" />
+      <input type="text" style="display:none;" name="xmIwtLD" value="99a6e30962e83f248e50ddf49f074d685c512873e8de81002d9121eab7fbf9181be0969ed51ee2eac39c291e3b5d5be3" />
+      <input type="text" style="display:none;" name="actionType" value="TGVhZHM=" />
+      <input type="text" style="display:none;" name="returnURL" value="https&#x3a;&#x2f;&#x2f;test.hospi.ai&#x2f;transmission-completed&#x2f;" />
+
+      <!-- 初めての資料請求？ -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label>初めての資料請求・お問い合わせですか？<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <label class="radio-inline"><input type="radio" name="first_time" value="yes"> はい</label>
+          <label class="radio-inline" style="margin-left:16px;"><input type="radio" name="first_time" value="no"> いいえ</label>
+          <!-- Zohoへ送る hidden（はい=true）-->
+          <input type="checkbox" id="LEADCF258" name="LEADCF258" hidden>
+        </div>
+      </div>
+
+      <!-- メール -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Email">メールアドレス<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="email" id="Email" name="Email" ftype="email" maxlength="100" inputmode="email" autocomplete="email" placeholder="例）taro@example.jp" />
+        </div>
+      </div>
+
+      <!-- メール再入力 -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="LEADCF2">メールアドレス（再入力）<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="email" id="LEADCF2" name="LEADCF2" ftype="email" maxlength="100" inputmode="email" autocomplete="off" placeholder="もう一度入力してください" />
+        </div>
+      </div>
+
+      <!-- 法人名 -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Company">法人名・団体名<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="Company" name="Company" maxlength="200" autocomplete="organization" />
+        </div>
+      </div>
+
+      <!-- 氏名 -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Last_Name">ご担当者さま氏名<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="Last_Name" name="Last Name" maxlength="80" autocomplete="name" />
+        </div>
+      </div>
+
+      <!-- Webサイト（型は text に緩和） -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Website">法人・団体さまのホームぺージURL<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="Website" name="Website" maxlength="255" inputmode="url" placeholder="https://example.jp" />
+        </div>
+      </div>
+
+      <!-- 電話（patternは一旦撤去） -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Phone">電話番号（ハイフンアリ）<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="tel" id="Phone" name="Phone" maxlength="30" inputmode="tel" placeholder="例）03-1234-5678" />
+        </div>
+      </div>
+
+      <!-- 問い合わせ種別（onChangeは外す） -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="LEADCF1">お問い合わせの内容を選択してください<span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <select class="zcwf_col_fld_slt" id="LEADCF1" name="LEADCF1">
+            <option value="-None-">-None-</option>
+            <option value="資料請求">資料請求</option>
+            <option value="一度オンラインで相談をしたい（無料）">一度オンラインで相談をしたい（無料）</option>
+            <option value="デモ画面を見たい">デモ画面を見たい</option>
+            <option value="トライアルがしたい（有償）">トライアルがしたい（有償）</option>
+            <option value="見積のご依頼">見積のご依頼</option>
+            <option value="一度電話が欲しい">一度電話が欲しい</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 自由記入 -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Description">ご要望等（1500文字以内）</label></div>
+        <div class="zcwf_col_fld">
+          <textarea id="Description" name="Description" maxlength="1500"></textarea>
+        </div>
+      </div>
+
+      <!-- honeypot -->
+      <input type="text" style="display:none" name="aG9uZXlwb3Q" value="" />
+
+      <!-- 送信 -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"></div>
+        <div class="zcwf_col_fld">
+          <button type="submit" id="submitDirect" class="formsubmit zcwf_button">送信する（直送デバッグ）</button>
+        </div>
+      </div>
+
+      <!-- Zoho Analytics（そのまま） -->
+      <script id="wf_anal" src="https://crm.zohopublic.com/crm/WebFormAnalyticsServeServlet?rid=75c40b9424a3a18e28272d9d50cc2c8775084d1e2b6d36a0d312802d1b6a8d6c9196d4995e35d0f0ccbd61aac11fb726gid9f41d45386f0796806d39d168ce93b487c009c246c44300dfd96c94fdddab00cgid2cf1547189165865156e21057918b46e7e7d06271c6fb75c76cc22bed069ee54gid72cb8e0d887cbfcc1ceeb8993cdb3db7a29578708d8bfa119ed741be4e6ea2b9&tw=8742d0a36dd135d7f2babae30094cadad49c700f5f6ac4691482cc7c12ed8a5f"></script>
+    </form>
+  </div>
+
+  <script src="./scripts/requestforInformation.debug.direct.js" defer></script>
+</body>
+</html>
