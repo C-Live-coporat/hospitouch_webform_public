@@ -3,16 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ほすぴタッチ｜お問い合わせ・資料請求フォーム（2画面デバッグ）</title>
+  <title>ほすぴタッチ｜お問い合わせ・資料請求フォーム（2stepデバッグ）</title>
+
+  <!-- 任意のローカルCSS（そのまま） -->
   <link rel="stylesheet" href="./styles/form.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 <body>
+
   <div id="crmWebToEntityForm" class="zcwf_lblLeft crmWebToEntityForm" style="max-width:800px;">
-    <h2 class="zcwf_title" style="margin-top:0;">2画面デバッグ用（検証ロジック停止）</h2>
+
+    <section class="notice-block" style="margin-top:0;">
+      <h2 class="zcwf_title">ご注意事項</h2>
+      <hr />
+      <p>［１］　お申込みいただきましたお客さまに「ほすぴタッチ」の資料を PDF 形式でお届けいたします（ダウンロード URL をメールいたします）。</p>
+      <p>［２］　メールアドレスはお間違いのないようにご入力ください。メールアドレスが間違っていました場合、弊社からのメールが届きません。</p>
+      <p>［３］　［ c-live.jp ］のドメインが受信できるように（迷惑メール扱いにならないよう）お願いいたします。</p>
+      <p>［４］　カタログや見積書等のご郵送は対応しておりませんので何卒ご了承くださいませ。</p>
+      <hr />
+    </section>
+
     <p class="zcwf_text" style="margin-top:0;">＊は必須項目です</p>
     <hr class="section-divider">
 
+    <!-- ===== Zoho フォーム本体 ===== -->
     <form
       id="webform5103321000002008018"
       action="https://crm.zoho.com/crm/WebToLeadForm"
@@ -22,24 +36,26 @@
       onsubmit="return checkMandatory5103321000002008018()"
       novalidate
     >
-      <!-- Zoho hidden -->
-      <input type="text" style="display:none;" name="xnQsjsdp" value="c2997d2720d9247b42664f8fc8bf2337b42e066f31197db47f7732403ad38b27" />
-      <input type="hidden" name="zc_gad" id="zc_gad" value="" />
-      <input type="text" style="display:none;" name="xmIwtLD" value="99a6e30962e83f248e50ddf49f074d685c512873e8de81002d9121eab7fbf9181be0969ed51ee2eac39c291e3b5d5be3" />
-      <input type="text" style="display:none;" name="actionType" value="TGVhZHM=" />
-      <input type="text" style="display:none;" name="returnURL" value="https&#x3a;&#x2f;&#x2f;test.hospi.ai&#x2f;transmission-completed&#x2f;" />
+      <!-- Zoho Hidden -->
+      <input type="text" style="display:none;"  name="xnQsjsdp"   value="c2997d2720d9247b42664f8fc8bf2337b42e066f31197db47f7732403ad38b27" />
+      <input type="hidden"                    id="zc_gad" name="zc_gad" value="" />
+      <input type="text" style="display:none;"  name="xmIwtLD"    value="99a6e30962e83f248e50ddf49f074d685c512873e8de81002d9121eab7fbf9181be0969ed51ee2eac39c291e3b5d5be3" />
+      <input type="text" style="display:none;"  name="actionType" value="TGVhZHM=" />
+      <input type="text" style="display:none;"  name="returnURL"  value="https&#x3a;&#x2f;&#x2f;test.hospi.ai&#x2f;transmission-completed&#x2f;" />
 
       <!-- ========= 入力ステップ ========= -->
       <div id="editSection">
         <h3 class="group-title">基本情報</h3>
 
+        <!-- はい/いいえ（Zohoのチェックボックスへ同期用のhiddenあり） -->
         <fieldset class="zcwf_row" role="group" aria-labelledby="firsttime-label">
           <div class="zcwf_col_lab" id="firsttime-label">
             <label>初めての資料請求・お問い合わせですか？<span style="color:red;">*</span></label>
           </div>
           <div class="zcwf_col_fld">
-            <label class="radio-inline"><input type="radio" name="first_time" value="yes"> はい</label>
-            <label class="radio-inline" style="margin-left:16px;"><input type="radio" name="first_time" value="no"> いいえ</label>
+            <label class="radio-inline"><input type="radio" name="first_time" value="yes" required> はい</label>
+            <label class="radio-inline" style="margin-left:16px;"><input type="radio" name="first_time" value="no" required> いいえ</label>
+            <!-- Zohoへ送る実体（はい=true／いいえ=false） -->
             <input type="checkbox" id="LEADCF258" name="LEADCF258" hidden>
           </div>
         </fieldset>
@@ -75,15 +91,15 @@
         <div class="zcwf_row">
           <div class="zcwf_col_lab"><label for="Website">法人・団体さまのホームぺージURL<span style="color:red;">*</span></label></div>
           <div class="zcwf_col_fld">
+            <!-- ネイティブのURL検証で弾かれないよう type="text" にしておく -->
             <input type="text" id="Website" name="Website" maxlength="255" inputmode="url" placeholder="https://example.jp" />
           </div>
         </div>
 
-        <!-- 電話（patternは一旦撤去） -->
         <div class="zcwf_row">
           <div class="zcwf_col_lab"><label for="Phone">電話番号（ハイフンアリ）<span style="color:red;">*</span></label></div>
           <div class="zcwf_col_fld">
-            <input type="tel" id="Phone" name="Phone" maxlength="30" inputmode="tel" placeholder="例）03-1234-5678" />
+            <input type="tel" id="Phone" name="Phone" maxlength="20" inputmode="tel" pattern="[0-9\-]+" placeholder="例）03-1234-5678" />
           </div>
         </div>
 
@@ -92,31 +108,42 @@
         <div class="zcwf_row">
           <div class="zcwf_col_lab"><label for="LEADCF1">お問い合わせの内容を選択してください<span style="color:red;">*</span></label></div>
           <div class="zcwf_col_fld">
-            <select class="zcwf_col_fld_slt" id="LEADCF1" name="LEADCF1">
-              <option value="-None-">-None-</option>
-              <option value="資料請求">資料請求</option>
-              <option value="一度オンラインで相談をしたい（無料）">一度オンラインで相談をしたい（無料）</option>
-              <option value="デモ画面を見たい">デモ画面を見たい</option>
-              <option value="トライアルがしたい（有償）">トライアルがしたい（有償）</option>
-              <option value="見積のご依頼">見積のご依頼</option>
-              <option value="一度電話が欲しい">一度電話が欲しい</option>
-              <option value="その他">その他</option>
+            <select class="zcwf_col_fld_slt"
+                    role="combobox"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    id="LEADCF1"
+                    onChange="addAriaSelected5103321000002008018()"
+                    aria-required="true"
+                    aria-label="LEADCF1"
+                    name="LEADCF1">
+              <option value="" disabled selected hidden>選択してください</option>
+              <option value="&#x8cc7;&#x6599;&#x8acb;&#x6c42;">&#x8cc7;&#x6599;&#x8acb;&#x6c42;</option>
+              <option value="&#x4e00;&#x5ea6;&#x30aa;&#x30f3;&#x30e9;&#x30a4;&#x30f3;&#x3067;&#x76f8;&#x8ac7;&#x3092;&#x3057;&#x305f;&#x3044;&#xff08;&#x7121;&#x6599;&#xff09;">&#x4e00;&#x5ea6;&#x30aa;&#x30f3;&#x30e9;&#x30a4;&#x30f3;&#x3067;&#x76f8;&#x8ac7;&#x3092;&#x3057;&#x305f;&#x3044;&#xff08;&#x7121;&#x6599;&#xff09;</option>
+              <option value="&#x30c7;&#x30e2;&#x753b;&#x9762;&#x3092;&#x898b;&#x305f;&#x3044;">&#x30c7;&#x30e2;&#x753b;&#x9762;&#x3092;&#x898b;&#x305f;&#x3044;</option>
+              <option value="&#x30c8;&#x30e9;&#x30a4;&#x30a2;&#x30eb;&#x304c;&#x3057;&#x305f;&#x3044;&#xff08;&#x6709;&#x511f;&#xff09;">&#x30c8;&#x30e9;&#x30a4;&#x30a2;&#x30eb;&#x304c;&#x3057;&#x305f;&#x3044;&#xff08;&#x6709;&#x511f;&#xff09;</option>
+              <option value="&#x898b;&#x7a4d;&#x306e;&#x3054;&#x4f9d;&#x983c;">&#x898b;&#x7a4d;&#x306e;&#x3054;&#x4f9d;&#x983c;</option>
+              <option value="&#x4e00;&#x5ea6;&#x96fb;&#x8a71;&#x304c;&#x6b32;&#x3057;&#x3044;">&#x4e00;&#x5ea6;&#x96fb;&#x8a71;&#x304c;&#x6b32;&#x3057;&#x3044;</option>
+              <option value="&#x305d;&#x306e;&#x4ed6;">&#x305d;&#x306e;&#x4ed6;</option>
             </select>
           </div>
         </div>
 
         <div class="zcwf_row">
-          <div class="zcwf_col_lab"><label for="Description">ご要望等（1500文字以内）</label></div>
+          <div class="zcwf_col_lab"><label for="Description">ご要望等ございましたら、ご記入ください。（1500文字以内）</label></div>
           <div class="zcwf_col_fld">
-            <textarea id="Description" name="Description" maxlength="1500"></textarea>
+            <textarea id="Description" name="Description" maxlength="1500" placeholder="導入予定時期／ご利用人数／現在の課題 など"></textarea>
+            <small class="help-counter"><span id="desc-count">0</span>/1500</small>
           </div>
         </div>
 
+        <!-- honeypot（スパム対策） -->
         <input type="text" style="display:none" name="aG9uZXlwb3Q" value="" />
 
         <div class="zcwf_row">
           <div class="zcwf_col_lab"></div>
           <div class="zcwf_col_fld">
+            <input type="reset" class="zcwf_button" value="フォームをクリア" />
             <button type="button" id="goConfirmBtn" class="zcwf_button">確認画面へ</button>
           </div>
         </div>
@@ -125,6 +152,8 @@
       <!-- ========= 確認ステップ ========= -->
       <section id="confirmSection" class="confirm-section" style="display:none;">
         <h3 class="group-title">入力内容の確認</h3>
+        <p class="confirm-note">※この画面では編集できません。修正する場合は「入力画面へ戻る」を押してください。</p>
+
         <dl class="confirm-list">
           <div class="confirm-row"><dt>初めての資料請求・お問い合わせ</dt><dd id="conf-first_time"></dd></div>
           <div class="confirm-row"><dt>メールアドレス</dt><dd id="conf-Email"></dd></div>
@@ -146,64 +175,97 @@
         </div>
       </section>
 
+      <!-- Zoho Analytics（そのまま） -->
       <script id="wf_anal" src="https://crm.zohopublic.com/crm/WebFormAnalyticsServeServlet?rid=75c40b9424a3a18e28272d9d50cc2c8775084d1e2b6d36a0d312802d1b6a8d6c9196d4995e35d0f0ccbd61aac11fb726gid9f41d45386f0796806d39d168ce93b487c009c246c44300dfd96c94fdddab00cgid2cf1547189165865156e21057918b46e7e7d06271c6fb75c76cc22bed069ee54gid72cb8e0d887cbfcc1ceeb8993cdb3db7a29578708d8bfa119ed741be4e6ea2b9&tw=8742d0a36dd135d7f2babae30094cadad49c700f5f6ac4691482cc7c12ed8a5f"></script>
     </form>
   </div>
 
-  <script src="./scripts/requestforInformation.debug.2step.js" defer></script>
+  <!-- 送信完了ブロック（returnURLで遷移するので通常は未使用） -->
+  <div class="zcwf_ty-bg" style="display:none;"></div>
+  <div id="zcwf_ty" class="zcwf_ty" style="display:none;">
+    <div class="transComp"><div class="material-icons">check_circle</div>送信完了</div>
+    <div class="zcwf_ty_text">お問い合わせありがとうございます。通常 2,3 分ほどで控えメールが届きます。</div>
+    <div class="zcwf_ty_text">迷惑メールに分類される場合がございますのでご注意ください。</div>
+    <div class="zcwf_ty_text">控えメールが届かない場合は、<strong>hospitouch@c-live.jp</strong> までご連絡ください。</div>
+    <div class="zcwf_ty_text p-info">オンライン無料相談のご予約（無料）：<a href="https://outlook.office365.com/book/Bookings@c-live.jp/">リンクはこちら</a></div>
+  </div>
+
+  <!-- ========= インラインJS：2step制御（外部JS不要） ========= -->
   <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('webform5103321000002008018');
-  const editSection = document.getElementById('editSection');
-  const confirmSection = document.getElementById('confirmSection');
-  const goConfirmBtn = document.getElementById('goConfirmBtn');
-  const backBtn = document.getElementById('backToEditBtn');
-  const finalBtn = document.getElementById('submitFinalBtn');
+    // Zoho出力互換：select の aria-selected を付け替えるダミー
+    function addAriaSelected5103321000002008018() {
+      const sel = document.getElementById('LEADCF1');
+      if (!sel) return;
+      const prev = sel.querySelector('[aria-selected=true]');
+      if (prev) prev.removeAttribute('aria-selected');
+      sel.options[sel.selectedIndex].ariaSelected = 'true';
+    }
 
-  // Zoho の onsubmit フックは常に通す
-  window.checkMandatory5103321000002008018 = () => true;
+    document.addEventListener('DOMContentLoaded', () => {
+      const form          = document.getElementById('webform5103321000002008018');
+      const editSection   = document.getElementById('editSection');
+      const confirmSection= document.getElementById('confirmSection');
+      const goConfirmBtn  = document.getElementById('goConfirmBtn');
+      const backBtn       = document.getElementById('backToEditBtn');
+      const finalBtn      = document.getElementById('submitFinalBtn');
 
-  function txt(id){ const el=document.getElementById(id); return el?el.value:''; }
-  function set(id,v){ const el=document.getElementById(id); if(el) el.textContent=v||''; }
+      // Zoho の onsubmit フックを常に true に（デバッグ用）
+      window.checkMandatory5103321000002008018 = () => true;
 
-  goConfirmBtn?.addEventListener('click', () => {
-    const r = document.querySelector('input[name="first_time"]:checked');
-    set('conf-first_time', r ? (r.value === 'yes' ? 'はい' : 'いいえ') : '');
-    set('conf-Email', txt('Email'));
-    set('conf-LEADCF2', txt('LEADCF2'));
-    set('conf-Company', txt('Company'));
-    set('conf-Last_Name', txt('Last_Name'));
-    set('conf-Website', txt('Website'));
-    set('conf-Phone', txt('Phone'));
-    const sel = document.getElementById('LEADCF1');
-    set('conf-LEADCF1', sel && sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : '');
-    set('conf-Description', txt('Description'));
+      // 文字数カウンタ
+      (function(){
+        const ta = document.getElementById('Description');
+        const cnt= document.getElementById('desc-count');
+        if (!ta || !cnt) return;
+        const update = () => { cnt.textContent = String(ta.value.length); };
+        ['input','keyup','change','paste','cut','compositionend'].forEach(ev => ta.addEventListener(ev, update));
+        update();
+      })();
 
-    editSection.style.display = 'none';
-    confirmSection.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+      function val(id){ const el=document.getElementById(id); return el?el.value:''; }
+      function setTxt(id,v){ const el=document.getElementById(id); if(el) el.textContent=v||''; }
 
-  backBtn?.addEventListener('click', () => {
-    confirmSection.style.display = 'none';
-    editSection.style.display = 'block';
-  });
+      // 入力→確認へ
+      goConfirmBtn?.addEventListener('click', () => {
+        const r = document.querySelector('input[name="first_time"]:checked');
+        setTxt('conf-first_time', r ? (r.value === 'yes' ? 'はい' : 'いいえ') : '');
+        setTxt('conf-Email',       val('Email'));
+        setTxt('conf-LEADCF2',     val('LEADCF2'));
+        setTxt('conf-Company',     val('Company'));
+        setTxt('conf-Last_Name',   val('Last_Name'));
+        setTxt('conf-Website',     val('Website'));
+        setTxt('conf-Phone',       val('Phone'));
+        const sel = document.getElementById('LEADCF1');
+        setTxt('conf-LEADCF1', sel && sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : '');
+        setTxt('conf-Description', val('Description'));
 
-  finalBtn?.addEventListener('click', (e) => {
-    e.preventDefault();
-    // はい/いいえ → LEADCF258 同期
-    const r  = document.querySelector('input[name="first_time"]:checked');
-    const cb = document.getElementById('LEADCF258');
-    if (cb) cb.checked = !!(r && r.value === 'yes');
+        editSection.style.display = 'none';
+        confirmSection.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
 
-    // 念のためネイティブ検証OFF
-    form.setAttribute('novalidate', 'novalidate');
+      // 確認→戻る
+      backBtn?.addEventListener('click', () => {
+        confirmSection.style.display = 'none';
+        editSection.style.display = 'block';
+      });
 
-    // 確実にPOST
-    setTimeout(() => form.submit(), 0);
-  });
-});
-</script>
+      // 送信
+      finalBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
 
+        // はい/いいえ → Zohoのチェックボックス LEADCF258 へ同期（はい=true）
+        const r  = document.querySelector('input[name="first_time"]:checked');
+        const cb = document.getElementById('LEADCF258');
+        if (cb) cb.checked = !!(r && r.value === 'yes');
+
+        // 念のためネイティブ検証OFF
+        form.setAttribute('novalidate', 'novalidate');
+
+        // 確実にPOST
+        setTimeout(() => form.submit(), 0);
+      });
+    });
+  </script>
 </body>
 </html>
