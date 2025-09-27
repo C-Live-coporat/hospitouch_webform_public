@@ -133,7 +133,7 @@ export function addSmartUrlHiddenIfNeeded(formId, paramKey = "service", expected
 /** 二重送信防止 */
 export function disableSubmit(selector) {
   const btn = document.querySelector(selector);
-  if (btn) btn.setAttribute("disabled", true);
+  if (btn) setTimeout(() => btn.setAttribute("disabled", true), 0);
 }
 
 /** select の aria-selected を切り替え（Zoho出力互換の動き） */
@@ -210,3 +210,4 @@ export function initFormValidation(config) {
 
   return doValidate;
 }
+
