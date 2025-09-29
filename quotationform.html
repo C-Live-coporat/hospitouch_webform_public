@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ほすぴタッチ｜概算見積のご依頼</title>
+
+  <link rel="stylesheet" href="./styles/form.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+<body>
+  <div id="crmWebToEntityForm" class="zcwf_lblLeft crmWebToEntityForm" style="max-width:800px;">
+
+    <section class="notice-block" style="margin-top:0;">
+      <h2 class="zcwf_title">ご注意事項</h2>
+      <hr />
+      <p>［１］　お申込みいただきましたお客さまに「ほすぴタッチ」の資料を PDF 形式でお届けいたします（ダウンロード URL をメールいたします）。</p>
+      <p>［２］　メールアドレスはお間違いのないようにご入力ください。メールアドレスが間違っていました場合、弊社からのメールが届きません。</p>
+      <p>［３］　［ c-live.jp ］のドメインが受信できるように（迷惑メール扱いにならないよう）お願いいたします。</p>
+      <p>［４］　カタログや見積書等のご郵送は対応しておりませんので何卒ご了承くださいませ。</p>
+      <p>［５］　4チーム以上お見積の場合は、お手数ですが、最初にオンライン相談をご予約ください。　https://outlook.office365.com/book/Bookings@c-live.jp/</p>
+      <hr />
+    </section>
+
+    <p class="zcwf_text" style="margin-top:0;">＊は必須項目です</p>
+    <hr class="section-divider">
+
+    <form
+      id="webform5103321000003697021"
+      name="WebToLeads5103321000003697021"
+      action="https://crm.zoho.com/crm/WebToLeadForm"
+      method="POST"
+      accept-charset="UTF-8"
+      onsubmit="return checkMandatory5103321000003697021()"
+      novalidate
+    >
+      <!-- ▼Zoho hidden（発行値をそのまま使用してください） -->
+      <input type="text"    style="display:none;" name="xnQsjsdp"  value="<!-- Zohoの値 -->" />
+      <input type="hidden"  name="zc_gad" id="zc_gad" value="" />
+      <input type="text"    style="display:none;" name="xmIwtLD"   value="<!-- Zohoの値 -->" />
+      <input type="text"    style="display:none;" name="actionType" value="TGVhZHM=" />
+      <input type="text"    style="display:none;" name="returnURL"  value="https://gray801458.studio.site/Forms/thanks" />
+      <!-- ▲Zoho hidden -->
+
+      <!-- ========= 入力ステップ ========= -->
+      <div id="editSection">
+        <h3 class="group-title">基本情報</h3>
+
+        <!-- 初回/非初回（ラジオ + hidden同期） -->
+        <fieldset class="zcwf_row" role="group" aria-labelledby="firsttime-label">
+          <div class="zcwf_col_lab" id="firsttime-label">
+            <label>初めての見積依頼ですか？<span style="color:red;">*</span></label>
+          </div>
+          <div class="zcwf_col_fld">
+            <label class="radio-inline"><input type="radio" name="first_time" value="yes" required> はい</label>
+            <label class="radio-inline" style="margin-left:16px;"><input type="radio" name="first_time" value="no" required> いいえ</label>
+            <!-- Zoho送信用（はい=true／いいえ=false） -->
+            <input type="checkbox" id="LEADCF263" name="LEADCF263" hidden>
+          </div>
+        </fieldset>
+
+        <!-- メール -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF10">メールアドレス<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld">
+            <input type="email" id="LEADCF10" name="LEADCF10" ftype="email" maxlength="100"
+                   inputmode="email" autocomplete="email" placeholder="例）taro@example.jp" />
+          </div>
+        </div>
+
+        <!-- メール（再入力） -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF10_confirm">メールアドレス（再入力）<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld">
+            <input type="email" id="LEADCF10_confirm" name="LEADCF10_confirm" ftype="email" maxlength="100"
+                   inputmode="email" autocomplete="off" placeholder="もう一度入力してください" />
+          </div>
+        </div>
+
+        <!-- 会社・氏名・URL・電話 -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="Company">法人名・団体名<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld"><input type="text" id="Company" name="Company" maxlength="200" autocomplete="organization" /></div>
+        </div>
+
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="Last_Name">ご担当者さま氏名<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld"><input type="text" id="Last_Name" name="Last Name" maxlength="80" autocomplete="name" /></div>
+        </div>
+
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="Website">法人・団体さまのホームぺージURL<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld"><input type="text" id="Website" name="Website" maxlength="255" inputmode="url" placeholder="https://example.jp" /></div>
+        </div>
+
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF9">お電話番号（ハイフンあり）<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld">
+            <input type="tel" id="LEADCF9" name="LEADCF9" maxlength="30" inputmode="tel" placeholder="例）03-1234-5678" />
+          </div>
+        </div>
+
+        <h3 class="group-title">チーム情報</h3>
+
+        <!-- Team 1（必須） -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF130">チーム① 名称<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld"><input type="text" id="LEADCF130" name="LEADCF130" maxlength="255" placeholder="例）ほすぴタッチ高度医療センター"/></div>
+        </div>
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF52">チーム① 想定人数<span style="color:red;">*</span></label></div>
+          <div class="zcwf_col_fld"><input type="text" id="LEADCF52" name="LEADCF52" maxlength="9" inputmode="numeric" placeholder="例）12" /></div>
+        </div>
+
+        <!-- Team 2（任意） -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF151">チーム② 名称</label></div>
+          <div class="zcwf_col_fld"><input type="text" id="LEADCF151" name="LEADCF151" maxlength="255" /></div>
+        </div>
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF53">チーム② 想定人数</label></div>
+          <div class="zcwf_col_fld"><input type="text" id="LEADCF53" name="LEADCF53" maxlength="9" inputmode="numeric" placeholder="" /></div>
+        </div>
+
+        <!-- Team 3（任意） -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF152">チーム③ 名称</label></div>
+          <div class="zcwf_col_fld"><input type="text" id="LEADCF152" name="LEADCF152" maxlength="255" /></div>
+        </div>
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"><label for="LEADCF54">チーム③ 想定人数</label></div>
+          <div class="zcwf_col_fld"><input type="text" id="LEADCF54" name="LEADCF54" maxlength="9" inputmode="numeric" placeholder="" /></div>
+        </div>
+
+        <!-- 要望（任意／1500文字・カウンタ） -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab">
+            <label for="Description">ご要望等ございましたら、ご記入ください。（1500文字以内）</label>
+          </div>
+          <div class="zcwf_col_fld">
+            <textarea id="Description" name="Description" maxlength="1500" placeholder="導入予定時期／ご利用人数／現在の課題 など"></textarea>
+            <small class="help-counter"><span id="desc-count">0</span>/1500</small>
+          </div>
+        </div>
+
+        <!-- honeypot -->
+        <input type="text" style="display:none" name="aG9uZXlwb3Q" value="" />
+
+        <!-- ボタン -->
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab"></div>
+          <div class="zcwf_col_fld">
+            <input type="reset" class="zcwf_button" value="フォームをクリア" />
+            <button type="button" id="goConfirmBtn" class="zcwf_button">確認画面へ</button>
+          </div>
+        </div>
+      </div><!-- /#editSection -->
+
+      <!-- ========= 確認ステップ ========= -->
+      <section id="confirmSection" class="confirm-section" style="display:none;">
+        <h3 class="group-title">入力内容の確認</h3>
+        <p class="confirm-note">※この画面では編集できません。修正する場合は「入力画面へ戻る」を押してください。</p>
+
+        <dl class="confirm-list">
+          <div class="confirm-row"><dt>初めての見積依頼</dt><dd id="conf-first_time"></dd></div>
+          <div class="confirm-row"><dt>メールアドレス</dt><dd id="conf-LEADCF10"></dd></div>
+          <div class="confirm-row"><dt>メールアドレス（再入力）</dt><dd id="conf-LEADCF10_confirm"></dd></div>
+          <div class="confirm-row"><dt>法人名・団体名</dt><dd id="conf-Company"></dd></div>
+          <div class="confirm-row"><dt>ご担当者さま氏名</dt><dd id="conf-Last_Name"></dd></div>
+          <div class="confirm-row"><dt>ホームページURL</dt><dd id="conf-Website"></dd></div>
+          <div class="confirm-row"><dt>お電話番号</dt><dd id="conf-LEADCF9"></dd></div>
+          <div class="confirm-row"><dt>チーム① 名称</dt><dd id="conf-LEADCF130"></dd></div>
+          <div class="confirm-row"><dt>チーム① 想定人数</dt><dd id="conf-LEADCF52"></dd></div>
+          <div class="confirm-row"><dt>チーム② 名称</dt><dd id="conf-LEADCF151"></dd></div>
+          <div class="confirm-row"><dt>チーム② 想定人数</dt><dd id="conf-LEADCF53"></dd></div>
+          <div class="confirm-row"><dt>チーム③ 名称</dt><dd id="conf-LEADCF152"></dd></div>
+          <div class="confirm-row"><dt>チーム③ 想定人数</dt><dd id="conf-LEADCF54"></dd></div>
+          <div class="confirm-row"><dt>ご要望</dt><dd id="conf-Description"></dd></div>
+        </dl>
+
+        <div class="zcwf_row confirm-actions">
+          <div class="zcwf_col_lab"></div>
+          <div class="zcwf_col_fld">
+            <button type="button" id="backToEditBtn" class="zcwf_button">入力画面へ戻る</button>
+            <button type="submit" id="submitFinalBtn" class="formsubmit zcwf_button">送信する</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Zoho Analytics（発行値のまま） -->
+      <script id="wf_anal" src="https://crm.zohopublic.com/crm/WebFormAnalyticsServeServlet?rid=9ab80acf5d1cf575862abcec6564295cb0fd25b859b991e72b54c100291fe12ed207c73e41f3fa56b591c9afd649eab5gid7deff508df76a975483b6de3e25040f79a3cf1c301990a177ac9af2399f9d06cgidaf82d556eefab6d81b1e486561b80361ba1a513d5c19aa4f0a007343f21eff75gid5f8431a9d74ea755c7a7ffd7b1d611692231cbfad7b3b741c3e1380cb9b3d030&tw=f5207fedbeab63b5e4cc51d4fd449624974450bdb877a0eb02496106c133cdda"></script>
+    </form>
+  </div>
+
+  <!-- ▼ローカルJS（ESM） -->
+  <script src="./scripts/quotationform.js" type="module"></script>
+</body>
+</html>
