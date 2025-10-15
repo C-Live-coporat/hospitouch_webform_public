@@ -52,17 +52,27 @@
         <h3 class="group-title">基本情報</h3>
 
         <!-- 行：初めての資料請求・お問い合わせ（ラジオUI＋Zohoチェックボックス同期） -->
-        <fieldset class="zcwf_row" role="group" aria-labelledby="firsttime-label">
-          <div class="zcwf_col_lab" id="firsttime-label">
-            <label>初めての資料請求・お問い合わせですか？<span style="color:red;">*</span></label>
+        <div class="zcwf_row">
+          <div class="zcwf_col_lab">
+            <label for="LEADCF3">初めての資料請求・お問い合わせですか？<span style="color:red;">*</span></label>
           </div>
           <div class="zcwf_col_fld">
-            <label class="radio-inline"><input type="radio" name="first_time" value="yes" required> はい</label>
-            <label class="radio-inline" style="margin-left:16px;"><input type="radio" name="first_time" value="no" required> いいえ</label>
-            <!-- 送信用（はい=true／いいえ=false） -->
-            <input type="checkbox" id="LEADCF258" name="LEADCF258" hidden>
+            <select class="zcwf_col_fld_slt"
+                    role="combobox"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    id="LEADCF3"
+                    onChange="addAriaSelected5103321000002008018()"
+                    aria-required="true"
+                    aria-label="LEADCF3"
+                    name="LEADCF3">
+              <option value="" disabled selected hidden>選択してください</option>
+              <option value="はい">はい</option>
+              <option value="いいえ">いいえ</option>
+              </select>
           </div>
-        </fieldset>
+        </div>
+
 
         <!-- 行：メール -->
         <div class="zcwf_row">
