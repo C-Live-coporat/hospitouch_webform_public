@@ -50,13 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
       // const cb = document.getElementById("LEADCF263");
       // if (cb) cb.checked = !!(r && r.value === "yes");
 
-      const firstTimeSelect = document.getElementById("LEADCF3");
+      const firstTimeSelect = document.getElementById("LEADCF6");
       if (!firstTimeSelect || !firstTimeSelect.value) {
         alert("フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。");
         firstTimeSelect?.focus();
         return false;
       }
-      const sel = document.getElementById("LEADCF3");
+      const sel = document.getElementById("LEADCF6");
       document.getElementById("conf-first_time").textContent = sel?.selectedOptions?.[0]?.textContent || "";
 
 
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function fillConfirm() {
     // const r = document.querySelector('input[name="first_time"]:checked');
     // document.getElementById("conf-first_time").textContent = r ? (r.value === "yes" ? "はい" : "いいえ") : "";
-    const sel = document.getElementById("LEADCF3");
+    const sel = document.getElementById("LEADCF6");
     document.getElementById("conf-first_time").textContent = sel?.selectedOptions[0].textContent || "";
     document.getElementById("conf-LEADCF10").textContent          = val("LEADCF10");
     document.getElementById("conf-LEADCF10_confirm").textContent  = val("LEADCF10_confirm");
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
   finalBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     // 念のため hidden 同期
-    const sel = document.getElementById("LEADCF3");
+    const sel = document.getElementById("LEADCF6");
     document.getElementById("conf-first_time").textContent = sel?.selectedOptions[0].textContent || "";
 
     form.setAttribute("novalidate", "novalidate");

@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       //   return false;
       // }
 
-      const sel = document.getElementById("LEADCF3");
+      const sel = document.getElementById("LEADCF6");
       if (!sel?.value) {
         alert(
           "フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。"
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //     hiddenZohoCheckbox.checked = (e.target.value === "yes"); // はい=true、いいえ=false
     //   });
     // });
-    const sel = document.getElementById("LEADCF3");
+    const sel = document.getElementById("LEADCF6");
     sel?.addEventListener("change", () => {
       const hiddenZohoCheckbox = document.getElementById("LEADCF258");
       if (hiddenZohoCheckbox) {
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const $ = (id) => document.getElementById(id);
 
     // はい/いいえ
-    const sel2 = document.getElementById("LEADCF3");
+    const sel2 = document.getElementById("LEADCF6");
     document.getElementById("conf-first_time").textContent = sel2?.value || "";
     document.getElementById("conf-Email").textContent =
       document.getElementById("Email")?.value || "";
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault(); // 既定のsubmitは止める（ネイティブ検証の影響を完全排除）
 
     // はい/いいえ → Zohoのhiddenチェックボックスへ同期（はい=true）
-    const sel = document.getElementById("LEADCF3");
+    const sel = document.getElementById("LEADCF6");
     const cb = document.getElementById("LEADCF258");
     if (cb) cb.checked = sel.value === "はい";
 
