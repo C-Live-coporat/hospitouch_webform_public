@@ -49,14 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 追加：はい/いいえ必須 ＋ 電話番号の国内/国際チェック（※ハイフン必須）
     extraValidate: () => {
-      // 1) はい/いいえ（ラジオ）の必須
-      // const radios = document.querySelectorAll('input[name="first_time"]');
-      // const checked = Array.from(radios).some(r => r.checked);
-      // if (!checked) {
-      //   alert("フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。");
-      //   return false;
-      // }
-
+      // 1) はい/いいえ select の必須チェック
       const sel = document.getElementById("LEADCF6");
       if (!sel?.value) {
         alert(
@@ -71,9 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const errEl = document.getElementById("phone-error");
       const raw = (phoneEl?.value || "").trim();
 
-      // 許可：半角数字・ハイフン・空白・+ のみ（他は弾く）
+      // 許可：半角数字・ハイフン・空白・+ のみ
       const allowed = /^[0-9+\-\s]+$/.test(raw);
-      // 追加：ハイフン必須
       const hasHyphen = raw.includes("-");
       if (allowed && !hasHyphen) {
         phoneEl?.classList.add("redBorder");
@@ -87,16 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 正規化：区切りを除外
       const noSep = raw.replace(/[\s-]/g, "");
-      const digits = noSep.replace(/\D/g, ""); // 数字だけ
+      const digits = noSep.replace(/\D/g, "");
 
       let ok = false;
 
       if (allowed) {
         if (noSep.startsWith("+")) {
-          // 国際形式：E.164目安（+ と 8〜15桁）
           ok = /^\+[1-9]\d{7,14}$/.test(noSep);
         } else {
-          // 国内形式：先頭 0、数字合計 10〜11 桁
           ok =
             digits.startsWith("0") &&
             (digits.length === 10 || digits.length === 11);
@@ -113,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         phoneEl?.focus();
         return false;
       }
+
       return true;
     },
 
