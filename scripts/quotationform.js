@@ -38,17 +38,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     extraValidate: () => {
       // 1) 初回/非初回（ラジオ必須）
-      const radios  = document.querySelectorAll('input[name="first_time"]');
-      const checked = Array.from(radios).some(r => r.checked);
-      if (!checked) {
-        alert("「初めての見積依頼ですか？」にお答えください。");
+      // const radios  = document.querySelectorAll('input[name="first_time"]');
+      // const checked = Array.from(radios).some(r => r.checked);
+      // if (!checked) {
+      //   alert("「初めての見積依頼ですか？」にお答えください。");
+      //   return false;
+      // }
+
+      // // ラジオ → Zoho hiddenチェックボックス（はい=true）
+      // const r  = document.querySelector('input[name="first_time"]:checked');
+      // const cb = document.getElementById("LEADCF263");
+      // if (cb) cb.checked = !!(r && r.value === "yes");
+
+      const firstTimeSelect = document.getElementById("LEADCF3");
+      if (!firstTimeSelect || !firstTimeSelect.value) {
+        alert("フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。");
+        firstTimeSelect?.focus();
         return false;
       }
+      const sel = document.getElementById("LEADCF3");
+      document.getElementById("conf-first_time").textContent = sel?.selectedOptions?.[0]?.textContent || "";
 
-      // ラジオ → Zoho hiddenチェックボックス（はい=true）
-      const r  = document.querySelector('input[name="first_time"]:checked');
-      const cb = document.getElementById("LEADCF263");
-      if (cb) cb.checked = !!(r && r.value === "yes");
 
       // 2) 電話番号チェック（ハイフン必須 + 国内/E.164）
       const phoneEl = document.getElementById("LEADCF9");
@@ -128,9 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const val = (id) => document.getElementById(id)?.value || "";
 
   function fillConfirm() {
-    const r = document.querySelector('input[name="first_time"]:checked');
-    document.getElementById("conf-first_time").textContent = r ? (r.value === "yes" ? "はい" : "いいえ") : "";
-
+    // const r = document.querySelector('input[name="first_time"]:checked');
+    // document.getElementById("conf-first_time").textContent = r ? (r.value === "yes" ? "はい" : "いいえ") : "";
+    const sel = document.getElementById("LEADCF3");
+    document.getElementById("conf-first_time").textContent = sel?.selectedOptions[0].textContent || "";
     document.getElementById("conf-LEADCF10").textContent          = val("LEADCF10");
     document.getElementById("conf-LEADCF10_confirm").textContent  = val("LEADCF10_confirm");
     document.getElementById("conf-Company").textContent           = val("Company");
@@ -167,9 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
   finalBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     // 念のため hidden 同期
-    const r  = document.querySelector('input[name="first_time"]:checked');
-    const cb = document.getElementById("LEADCF263");
-    if (cb) cb.checked = !!(r && r.value === "yes");
+    const sel = document.getElementById("LEADCF3");
+    document.getElementById("conf-first_time").textContent = sel?.selectedOptions[0].textContent || "";
 
     form.setAttribute("novalidate", "novalidate");
     form.submit();

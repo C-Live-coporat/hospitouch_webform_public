@@ -39,12 +39,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // 追加：はい/いいえ必須 ＋ 電話番号の国内/国際チェック（※ハイフン必須）
     extraValidate: () => {
       // 1) はい/いいえ（ラジオ）の必須
-      const radios = document.querySelectorAll('input[name="first_time"]');
-      const checked = Array.from(radios).some(r => r.checked);
-      if (!checked) {
+      // const radios = document.querySelectorAll('input[name="first_time"]');
+      // const checked = Array.from(radios).some(r => r.checked);
+      // if (!checked) {
+      //   alert("フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。");
+      //   return false;
+      // }
+
+      const sel = document.getElementById("LEADCF3");
+      if (!sel?.value) {
         alert("フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。");
+        sel?.focus();
         return false;
       }
+
 
       // 2) 電話番号の日本向けルール（ハイフン必須）
       const phoneEl = document.getElementById("Phone");
@@ -110,14 +118,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ラジオ（はい/いいえ）→ Zohoのcheckbox(LEADCF258)に同期
   (function syncFirstTimeToZoho(){
-    const hiddenZohoCheckbox = document.getElementById("LEADCF258");
-    const radios = document.querySelectorAll('input[name="first_time"]');
-    if (!hiddenZohoCheckbox || radios.length === 0) return;
-    radios.forEach(r => {
-      r.addEventListener("change", e => {
-        hiddenZohoCheckbox.checked = (e.target.value === "yes"); // はい=true、いいえ=false
-      });
+    // const hiddenZohoCheckbox = document.getElementById("LEADCF258");
+    // const radios = document.querySelectorAll('input[name="first_time"]');
+    // if (!hiddenZohoCheckbox || radios.length === 0) return;
+    // radios.forEach(r => {
+    //   r.addEventListener("change", e => {
+    //     hiddenZohoCheckbox.checked = (e.target.value === "yes"); // はい=true、いいえ=false
+    //   });
+    // });
+    const sel = document.getElementById("LEADCF3");
+    sel?.addEventListener("change", () => {
+      const hiddenZohoCheckbox = document.getElementById("LEADCF258");
+      if (hiddenZohoCheckbox) {
+        hiddenZohoCheckbox.checked = (sel.value === "はい"); // 「はい」の場合 true
+      }
     });
+
   })();
 
   // 文字数カウンタ（IME・貼付対応）
@@ -178,9 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault(); // 既定のsubmitは止める（ネイティブ検証の影響を完全排除）
 
     // はい/いいえ → Zohoのhiddenチェックボックスへ同期（はい=true）
-    const r  = document.querySelector('input[name="first_time"]:checked');
-    const cb = document.getElementById("LEADCF258");
-    if (cb) cb.checked = !!(r && r.value === "yes");
+    const sel = document.getElementById("LEADCF3");
+    const cb  = document.getElementById("LEADCF258");
+    if (cb) cb.checked = (sel.value === "はい");
 
     // 念押しでHTML5検証をOFF
     form.setAttribute("novalidate", "novalidate");
