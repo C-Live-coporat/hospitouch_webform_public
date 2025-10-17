@@ -7,9 +7,6 @@ import {
 const ZOHO_FORM_NAME = "WebToLeads5103321000002008018";
 const ZOHO_FORM_ID = "webform5103321000002008018";
 
-window.addEventListener("load", sendHeightToParent);
-window.addEventListener("resize", sendHeightToParent);
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById(ZOHO_FORM_ID);
   const editSection = document.getElementById("editSection");
