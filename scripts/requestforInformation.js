@@ -7,6 +7,22 @@ import {
 const ZOHO_FORM_NAME = "WebToLeads5103321000002008018";
 const ZOHO_FORM_ID = "webform5103321000002008018";
 
+function sendHeightToParent() {
+  try {
+    const height = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: "formHeight", height }, "*");
+  } catch (e) {
+    console.error("高さ送信エラー:", e);
+  }
+}
+
+  // DOM変化を監視して、高さが変わったら再送信
+  const observer = new MutationObserver(() => sendHeightToParent());
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  window.addEventListener("load", sendHeightToParent);
+  window.addEventListener("resize", sendHeightToParent);
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById(ZOHO_FORM_ID);
   const editSection = document.getElementById("editSection");
@@ -224,4 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 送信確定（type="submit" なので通常どおり Zoho にPOST）
   // → 追加コードは不要（window.checkMandatory... が発火）
+  // ✅ フォームDOM構築完了後に1回だけ高さを再通知
+  setTimeout(sendHeightToParent, 100);
 });
+
