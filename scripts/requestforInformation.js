@@ -223,21 +223,33 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 送信（確認画面の「送信する」）
-  finalBtn?.addEventListener("click", (e) => {
-    e.preventDefault(); // 既定のsubmitは止める（ネイティブ検証の影響を完全排除）
+  finalBtn?.addEventListener("click", async (e) => {
+  e.preventDefault();
 
-    // はい/いいえ → Zohoのhiddenチェックボックスへ同期（はい=true）
-    const sel = document.getElementById("LEADCF6");
-    const cb = document.getElementById("LEADCF258");
-    if (cb) cb.checked = sel.value === "はい";
+  const sel = document.getElementById("LEADCF6");
+  const cb = document.getElementById("LEADCF258");
+  if (cb) cb.checked = sel.value === "はい";
 
-    // 念押しでHTML5検証をOFF
-    form.setAttribute("novalidate", "novalidate");
+  if (!doValidate()) return;
 
-    // 確実にPOST
-    form.submit();
-  });
+  // FormData を作成
+  const formData = new FormData(form);
+
+  try {
+    await fetch(form.action, {
+      method: "POST",
+      body: formData,
+      mode: "no-cors" // Zoho 受信用
+    });
+    // 送信完了を親ページに通知
+    window.parent.postMessage({ type: "formSubmitted" }, "*");
+  } catch (err) {
+    console.error("送信エラー", err);
+    alert("送信に失敗しました。もう一度お試しください。");
+  }
 });
+});
+
 
 
 
