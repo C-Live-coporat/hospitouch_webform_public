@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const originalZcOnSuccess = window.zcOnSuccess;
     window.zcOnSuccess = function () {
       originalZcOnSuccess();
-      window.parent.postMessage({ type: "formSubmitted" }, "https://hospi.ai");
+      window.parent.postMessage({ type: "formSubmitted" }, "*");
     };
   }
   // ===== バリデーション初期化 =====
@@ -233,3 +233,4 @@ document.addEventListener("DOMContentLoaded", () => {
     form.submit();
   });
 });
+
