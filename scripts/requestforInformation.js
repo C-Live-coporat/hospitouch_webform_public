@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const backBtn = document.getElementById("backToEditBtn");
   const finalBtn = document.getElementById("submitFinalBtn");
 
+  if (typeof window.zcOnSuccess === "function") {
+    const originalZcOnSuccess = window.zcOnSuccess;
+    window.zcOnSuccess = function () {
+      originalZcOnSuccess();
+      window.parent.postMessage({ type: "formSubmitted" }, "https://hospi.ai");
+    };
+  }
   // ===== バリデーション初期化 =====
   const doValidate = initFormValidation({
     formId: ZOHO_FORM_ID,
@@ -201,7 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
       topAnchor.scrollIntoView({ behavior: "smooth" });
     }
     window.parent.postMessage({ type: "scrollToTop" }, "*");
-
   });
 
   // 修正に戻る
@@ -226,7 +232,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // 確実にPOST
     form.submit();
   });
-  
 });
-
-
