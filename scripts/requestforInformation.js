@@ -7,6 +7,27 @@ import {
 const ZOHO_FORM_NAME = "WebToLeads5103321000002008018";
 const ZOHO_FORM_ID = "webform5103321000002008018";
 
+// ===== Zoho onSuccessフック（確実版） =====
+function attachZohoSuccessHook() {
+  if (typeof window.zcOnSuccess === "function") {
+    const originalZcOnSuccess = window.zcOnSuccess;
+    window.zcOnSuccess = function () {
+      originalZcOnSuccess();
+      console.log("✅ zcOnSuccess 発火 → 親に formSubmitted 通知");
+      window.parent.postMessage({ type: "formSubmitted" }, "*");
+    };
+    console.log("✅ zcOnSuccess を上書きしました");
+    return true;
+  }
+  return false;
+}
+
+// 300msごとにチェックして、定義されたら上書き
+const interval = setInterval(() => {
+  if (attachZohoSuccessHook()) clearInterval(interval);
+}, 300);
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById(ZOHO_FORM_ID);
   const editSection = document.getElementById("editSection");
@@ -14,14 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const goConfirmBtn = document.getElementById("goConfirmBtn");
   const backBtn = document.getElementById("backToEditBtn");
   const finalBtn = document.getElementById("submitFinalBtn");
-
-  if (typeof window.zcOnSuccess === "function") {
-    const originalZcOnSuccess = window.zcOnSuccess;
-    window.zcOnSuccess = function () {
-      originalZcOnSuccess();
-      window.parent.postMessage({ type: "formSubmitted" }, "*");
-    };
-  }
+  
   // ===== バリデーション初期化 =====
   const doValidate = initFormValidation({
     formId: ZOHO_FORM_ID,
@@ -233,4 +247,5 @@ document.addEventListener("DOMContentLoaded", () => {
     form.submit();
   });
 });
+
 
