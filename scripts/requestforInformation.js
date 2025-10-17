@@ -199,7 +199,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 画面切り替え
     editSection.style.display = "none";
     confirmSection.style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const topAnchor = document.getElementById("top");
+    if (topAnchor) {
+      topAnchor.scrollIntoView({ behavior: "smooth" });
+    }
+    window.parent.postMessage({ type: "scrollToTop" }, "*");
+
   });
 
   // 修正に戻る
