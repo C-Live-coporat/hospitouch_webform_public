@@ -7,26 +7,17 @@ import {
 const ZOHO_FORM_NAME = "WebToLeads5103321000002008018";
 const ZOHO_FORM_ID = "webform5103321000002008018";
 
-// ===== Zoho onSuccessフック（確実版） =====
-function attachZohoSuccessHook() {
-  if (typeof window.zcOnSuccess === "function") {
-    const originalZcOnSuccess = window.zcOnSuccess;
-    window.zcOnSuccess = function () {
-      originalZcOnSuccess();
-      console.log("✅ zcOnSuccess 発火 → 親に formSubmitted 通知");
-      window.parent.postMessage({ type: "formSubmitted" }, "*");
-    };
-    console.log("✅ zcOnSuccess を上書きしました");
-    return true;
-  }
-  return false;
+function onZohoSuccess() {
+  window.parent.postMessage({ type: "formSubmitted" }, "*");
 }
 
-// 300msごとにチェックして、定義されたら上書き
-const interval = setInterval(() => {
-  if (attachZohoSuccessHook()) clearInterval(interval);
-}, 300);
-
+if (window.ZOHO && ZOHO.embeddedForm) {
+  ZOHO.embeddedForm.on("success", onZohoSuccess);
+} else {
+  window.zfAsyncInit = function() {
+    ZOHO.embeddedForm.on("success", onZohoSuccess);
+  };
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById(ZOHO_FORM_ID);
@@ -247,5 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
     form.submit();
   });
 });
+
 
 
