@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "法人名・団体名",
       "ご担当者さま氏名",
       "法人・団体さまのホームぺージURL",
-      "お電話番号",
-      "メールアドレス",
-      "メールアドレス（再入力）",
+      "おご担当者さま電話番号",
+      "ご担当者さまメールアドレス",
+      "ご担当者さまメールアドレス（再入力）",
       "チーム① 名称",
       "チーム① 想定人数"
     ],
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sel.value === "yes" ? "はい" : "いいえ";
 
 
-      // 2) 電話番号チェック（ハイフン必須 + 国内/E.164）
+      // 2) ご担当者さま電話番号チェック（ハイフン必須 + 国内/E.164）
       const phoneEl = document.getElementById("LEADCF9");
       const errEl   = document.getElementById("phone-error");
       const raw     = (phoneEl?.value || "").trim();
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (allowed && !hasHyphen) {
         phoneEl?.classList.add("redBorder");
         errEl?.classList.add("open");
-        alert("電話番号には必ずハイフン（-）を含めて入力してください。\n例：03-1234-5678 / 090-1234-5678 / +81-3-1234-5678");
+        alert("ご担当者さま電話番号には必ずハイフン（-）を含めて入力してください。\n例：03-1234-5678 / 090-1234-5678 / +81-3-1234-5678");
         phoneEl?.focus();
         return false;
       }
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       phoneEl?.classList.toggle("redBorder", !ok);
       errEl?.classList.toggle("open", !ok);
       if (!ok) {
-        alert("電話番号の形式が正しくありません。\n国内は「0」始まりで数字合計10〜11桁、または国際形式（+81 〜）で入力してください。");
+        alert("ご担当者さま電話番号の形式が正しくありません。\n国内は「0」始まりで数字合計10〜11桁、または国際形式（+81 〜）で入力してください。");
         phoneEl?.focus();
         return false;
       }

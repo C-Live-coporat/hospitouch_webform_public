@@ -73,7 +73,7 @@ export function validateZohoEmailFtype(formName) {
     const at = v.indexOf("@");
     const dot = v.lastIndexOf(".");
     if (at < 1 || dot < at + 2 || dot + 2 >= v.length) {
-      alert("有効なメールアドレスを入力してください。");
+      alert("有効なご担当者さまメールアドレスを入力してください。");
       fld[i].focus();
       return false;
     }
@@ -194,11 +194,11 @@ export function initFormValidation(config) {
     if (!validateZohoEmailFtype(formName)) return false;
     if (!checkEmailFormatOk()) return false;
     if (!checkEmailConfirmOk()) {
-      alert("メールアドレスが一致しません。もう一度入力してください。");
+      alert("ご担当者さまメールアドレスが一致しません。もう一度入力してください。");
       return false;
     }
     if (!checkPhoneOk()) {
-      alert("電話番号記入欄に全角数字、または文字が入力されています。もう一度入力してください。");
+      alert("ご担当者さま電話番号記入欄に全角数字、または文字が入力されています。もう一度入力してください。");
       return false;
     }
     if (typeof extraValidate === "function" && !extraValidate()) return false;

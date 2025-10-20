@@ -44,11 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
     requiredLabels: [
       "法人名・団体名",
       "ご担当者さま氏名",
-      "メールアドレス",
-      "電話番号",
+      "ご担当者さまメールアドレス",
+      "ご担当者さま電話番号",
       "貴社のWebサイトURL",
       "お問い合わせの内容を選択してください",
-      "メールアドレス（再入力）",
+      "ご担当者さまメールアドレス（再入力）",
     ],
 
     emailSelector: "#Email",
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // select の aria-selected を補助（Zoho互換）
     selectAriaIds: ["LEADCF1"],
 
-    // 追加：はい/いいえ必須 ＋ 電話番号の国内/国際チェック（※ハイフン必須）
+    // 追加：はい/いいえ必須 ＋ ご担当者さま電話番号の国内/国際チェック（※ハイフン必須）
     extraValidate: () => {
       // 1) はい/いいえ select の必須チェック
       const sel = document.getElementById("LEADCF6");
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
       }
 
-      // 2) 電話番号の日本向けルール（ハイフン必須）
+      // 2) ご担当者さま電話番号の日本向けルール（ハイフン必須）
       const phoneEl = document.getElementById("Phone");
       const errEl = document.getElementById("phone-error");
       const raw = (phoneEl?.value || "").trim();
