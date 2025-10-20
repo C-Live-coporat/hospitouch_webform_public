@@ -35,29 +35,35 @@
       novalidate
     >
       <!-- ▼Zoho hidden（発行値をそのまま使用してください） -->
-      <input type="text"    style="display:none;" name="xnQsjsdp"  value="<!-- Zohoの値 -->" />
-      <input type="hidden"  name="zc_gad" id="zc_gad" value="" />
-      <input type="text"    style="display:none;" name="xmIwtLD"   value="<!-- Zohoの値 -->" />
-      <input type="text"    style="display:none;" name="actionType" value="TGVhZHM=" />
-      <input type="text"    style="display:none;" name="returnURL"  value="https://gray801458.studio.site/Forms/thanks" />
+      <input type = 'text' style = 'display:none;' name = 'xnQsjsdp' value = '8a01c54a605ef8932b06b384a2f5d8400d4de035be0f9c0c5e3d6cd55de9b514'></input>
+      <input type = 'hidden' name = 'zc_gad' id = 'zc_gad' value = ''></input>
+      <input type = 'text' style = 'display:none;' name = 'xmIwtLD' value = 'aacfd54521d3e620c982115ac56a555c8c477d5749e6d747fe1c67a8511b80385978093cd557aad2228fdd612cddd6a8'></input>
+      <input type = 'text' style = 'display:none;' name = 'actionType' value = 'TGVhZHM='></input>
+      <input type = 'text' style = 'display:none;' name = 'returnURL' value = 'null'></input>
+      <!-- はい/いいえをZohoに送信するための隠しチェックボックス -->
+      <input type="hidden" id="LEADCF258" name="LEADCF258" value="" />
+
       <!-- ▲Zoho hidden -->
 
       <!-- ========= 入力ステップ ========= -->
       <div id="editSection">
         <h3 class="group-title">基本情報</h3>
 
-        <!-- 初回/非初回（ラジオ + hidden同期） -->
-        <fieldset class="zcwf_row" role="group" aria-labelledby="firsttime-label">
-          <div class="zcwf_col_lab" id="firsttime-label">
-            <label>初めての見積依頼ですか？<span style="color:red;">*</span></label>
-          </div>
-          <div class="zcwf_col_fld">
-            <label class="radio-inline"><input type="radio" name="first_time" value="yes" required> はい</label>
-            <label class="radio-inline" style="margin-left:16px;"><input type="radio" name="first_time" value="no" required> いいえ</label>
-            <!-- Zoho送信用（はい=true／いいえ=false） -->
-            <input type="checkbox" id="LEADCF263" name="LEADCF263" hidden>
-          </div>
-        </fieldset>
+      <!-- 初回/非初回（ドロップダウン + hidden同期） -->
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab">
+          <label for="LEADCF263">初めての見積依頼ですか？<span style="color:red;">*</span></label>
+        </div>
+        <div class="zcwf_col_fld">
+          <select id="LEADCF263_select" name="first_time_select" required>
+            <option value="" disabled selected hidden>選択してください</option>
+            <option value="yes">はい</option>
+            <option value="no">いいえ</option>
+          </select>
+          <!-- Zoho送信用 hidden -->
+          <input type="checkbox" id="LEADCF263" name="LEADCF263" hidden>
+        </div>
+      </div>
 
         <!-- メール -->
         <div class="zcwf_row">

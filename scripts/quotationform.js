@@ -37,27 +37,21 @@ document.addEventListener("DOMContentLoaded", () => {
     selectAriaIds: [],
 
     extraValidate: () => {
-      // 1) 初回/非初回（ラジオ必須）
-      // const radios  = document.querySelectorAll('input[name="first_time"]');
-      // const checked = Array.from(radios).some(r => r.checked);
-      // if (!checked) {
-      //   alert("「初めての見積依頼ですか？」にお答えください。");
-      //   return false;
-      // }
-
-      // // ラジオ → Zoho hiddenチェックボックス（はい=true）
-      // const r  = document.querySelector('input[name="first_time"]:checked');
-      // const cb = document.getElementById("LEADCF263");
-      // if (cb) cb.checked = !!(r && r.value === "yes");
-
-      const firstTimeSelect = document.getElementById("LEADCF6");
-      if (!firstTimeSelect || !firstTimeSelect.value) {
-        alert("フォーム項目１つ目「初めての資料請求・お問い合わせですか？」にお答えください。");
-        firstTimeSelect?.focus();
+      // ▼ 初回/非初回（ドロップダウン必須）
+      const sel = document.getElementById("LEADCF263_select");
+      if (!sel || !sel.value) {
+        alert("フォーム項目１つ目「初めての見積依頼ですか？」にお答えください。");
+        sel?.focus();
         return false;
       }
-      const sel = document.getElementById("LEADCF6");
-      document.getElementById("conf-first_time").textContent = sel?.selectedOptions?.[0]?.textContent || "";
+
+      // hidden 同期（はい＝true, いいえ＝false）
+      const cb = document.getElementById("LEADCF263");
+      cb.checked = (sel.value === "yes");
+
+      // 確認画面表示用テキスト
+      document.getElementById("conf-first_time").textContent =
+        sel.value === "yes" ? "はい" : "いいえ";
 
 
       // 2) 電話番号チェック（ハイフン必須 + 国内/E.164）
@@ -138,10 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const val = (id) => document.getElementById(id)?.value || "";
 
   function fillConfirm() {
-    // const r = document.querySelector('input[name="first_time"]:checked');
-    // document.getElementById("conf-first_time").textContent = r ? (r.value === "yes" ? "はい" : "いいえ") : "";
-    const sel = document.getElementById("LEADCF6");
-    document.getElementById("conf-first_time").textContent = sel?.selectedOptions[0].textContent || "";
+    const sel = document.getElementById("LEADCF263_select");
+    document.getElementById("conf-first_time").textContent = sel?.value === "yes" ? "はい" : "いいえ";
     document.getElementById("conf-LEADCF10").textContent          = val("LEADCF10");
     document.getElementById("conf-LEADCF10_confirm").textContent  = val("LEADCF10_confirm");
     document.getElementById("conf-Company").textContent           = val("Company");
@@ -175,13 +167,30 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  finalBtn?.addEventListener("click", (e) => {
+  // 送信（確認画面の「送信する」）
+  finalBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    // 念のため hidden 同期
-    const sel = document.getElementById("LEADCF6");
-    document.getElementById("conf-first_time").textContent = sel?.selectedOptions[0].textContent || "";
-
-    form.setAttribute("novalidate", "novalidate");
-    form.submit();
+  
+    const sel = document.getElementById("LEADCF263_select");
+    const cb = document.getElementById("LEADCF258");
+    if (cb) cb.checked = sel.value === "はい";
+  
+    if (!doValidate()) return;
+  
+    // FormData を作成
+    const formData = new FormData(form);
+  
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors" // Zoho 受信用
+      });
+      // 送信完了を親ページに通知
+      window.parent.postMessage({ type: "formSubmitted" }, "*");
+    } catch (err) {
+      console.error("送信エラー", err);
+      alert("送信に失敗しました。もう一度お試しください。");
+    }
   });
 });
