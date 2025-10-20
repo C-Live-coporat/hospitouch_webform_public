@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formId:   ZOHO_FORM_ID,
     formName: ZOHO_FORM_NAME,
 
-    requiredNames:  ["Company", "Last_Name", "Website", "LEADCF9", "LEADCF10", "LEADCF10_confirm", "LEADCF130", "LEADCF52"],
+    requiredNames:  ["Company", "Last Name", "Website", "LEADCF9", "LEADCF10", "LEADCF10_confirm", "LEADCF130", "LEADCF52"],
     requiredLabels: [
       "法人名・団体名",
       "ご担当者さま氏名",
