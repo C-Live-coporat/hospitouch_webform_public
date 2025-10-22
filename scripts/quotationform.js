@@ -116,9 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Zoho onsubmit 互換
   window.checkMandatory5103321000003697021 = doValidate;
 
-  // === 文字数カウンタ（Description） ===
+  // === 文字数カウンタ（LEADCF162） ===
   (function setupCounter(){
-    const ta  = document.getElementById("Description");
+    const ta  = document.getElementById("LEADCF162");
     const cnt = document.getElementById("desc-count");
     if (!ta || !cnt) return;
     const update = () => { cnt.textContent = String(ta.value.length); };
@@ -149,8 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("conf-LEADCF54").textContent          = val("LEADCF54");
 
     // 任意：確認画面に要望欄がある場合のみ転記（無ければ何もしない）
-    const confDesc = document.getElementById("conf-Description");
-    if (confDesc) confDesc.textContent = val("Description");
+    const confDesc = document.getElementById("conf-LEADCF162");
+    if (confDesc) confDesc.textContent = val("LEADCF162");
   }
 
   goConfirmBtn?.addEventListener("click", () => {

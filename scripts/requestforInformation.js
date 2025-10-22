@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
     requiredNames: [
       "Company",
       "Last Name",
-      "Email",
-      "Phone",
+      "LEADCF10",
+      "LEADCF9",
       "Website",
       "LEADCF1",
       "LEADCF2",
@@ -51,9 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "ご担当者さまメールアドレス（再入力）",
     ],
 
-    emailSelector: "#Email",
+    emailSelector: "#LEADCF10",
     emailConfirmSelector: "#LEADCF2",
-    phoneSelector: "#Phone",
+    phoneSelector: "#LEADCF9",
     phoneErrorSelector: "#phone-error", // HTML側に <small id="phone-error">... を置いてください
 
     // select の aria-selected を補助（Zoho互換）
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 2) ご担当者さま電話番号の日本向けルール（ハイフン必須）
-      const phoneEl = document.getElementById("Phone");
+      const phoneEl = document.getElementById("LEADCF9");
       const errEl = document.getElementById("phone-error");
       const raw = (phoneEl?.value || "").trim();
 
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 文字数カウンタ（IME・貼付対応）
   (function setupCounter() {
-    const ta = document.getElementById("Description");
+    const ta = document.getElementById("LEADCF162");
     const cnt = document.getElementById("desc-count");
     if (!ta || !cnt) return;
     const update = () => {
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sel2 = document.getElementById("LEADCF6");
     document.getElementById("conf-first_time").textContent = sel2?.value || "";
     document.getElementById("conf-Email").textContent =
-      document.getElementById("Email")?.value || "";
+      document.getElementById("LEADCF10")?.value || "";
     document.getElementById("conf-LEADCF2").textContent =
       document.getElementById("LEADCF2")?.value || "";
     document.getElementById("conf-Company").textContent =
@@ -188,14 +188,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("conf-Website").textContent =
       document.getElementById("Website")?.value || "";
     document.getElementById("conf-Phone").textContent =
-      document.getElementById("Phone")?.value || "";
+      document.getElementById("LEADCF9")?.value || "";
 
     const sel = document.getElementById("LEADCF1");
     document.getElementById("conf-LEADCF1").textContent =
       sel?.selectedOptions?.[0]?.textContent || "";
 
-    document.getElementById("conf-Description").textContent =
-      document.getElementById("Description")?.value || "";
+    document.getElementById("conf-LEADCF162").textContent =
+      document.getElementById("LEADCF162")?.value || "";
   }
 
   goConfirmBtn?.addEventListener("click", () => {
