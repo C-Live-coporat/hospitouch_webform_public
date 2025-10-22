@@ -26,14 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const goConfirmBtn = document.getElementById("goConfirmBtn");
   const backBtn = document.getElementById("backToEditBtn");
   const finalBtn = document.getElementById("submitFinalBtn");
-  const lastNameInput = document.getElementById("Last_Name");
-  const leadcf17Input = document.getElementById("LEADCF17");
-
-  if (lastNameInput && leadcf17Input) {
-    lastNameInput.addEventListener("input", function() {
-      leadcf17Input.value = lastNameInput.value;
-    });
-  }
   
   // ===== バリデーション初期化 =====
   const doValidate = initFormValidation({
