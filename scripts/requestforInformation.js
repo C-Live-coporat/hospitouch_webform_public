@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
     requiredNames: [
       "Company",
       "Last Name",
-      "LEADCF10",
-      "LEADCF9",
+      "Email",
+      "Phone",
       "Website",
       "LEADCF1",
       "LEADCF2",
@@ -59,9 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "ご担当者さまメールアドレス（再入力）",
     ],
 
-    emailSelector: "#LEADCF10",
+    emailSelector: "#Email",
     emailConfirmSelector: "#LEADCF2",
-    phoneSelector: "#LEADCF9",
+    phoneSelector: "#Phone",
     phoneErrorSelector: "#phone-error", // HTML側に <small id="phone-error">... を置いてください
 
     // select の aria-selected を補助（Zoho互換）
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 2) ご担当者さま電話番号の日本向けルール（ハイフン必須）
-      const phoneEl = document.getElementById("LEADCF9");
+      const phoneEl = document.getElementById("Phone");
       const errEl = document.getElementById("phone-error");
       const raw = (phoneEl?.value || "").trim();
 
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sel2 = document.getElementById("LEADCF6");
     document.getElementById("conf-first_time").textContent = sel2?.value || "";
     document.getElementById("conf-Email").textContent =
-      document.getElementById("LEADCF10")?.value || "";
+      document.getElementById("Email")?.value || "";
     document.getElementById("conf-LEADCF2").textContent =
       document.getElementById("LEADCF2")?.value || "";
     document.getElementById("conf-Company").textContent =
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("conf-Website").textContent =
       document.getElementById("Website")?.value || "";
     document.getElementById("conf-Phone").textContent =
-      document.getElementById("LEADCF9")?.value || "";
+      document.getElementById("Phone")?.value || "";
 
     const sel = document.getElementById("LEADCF1");
     document.getElementById("conf-LEADCF1").textContent =

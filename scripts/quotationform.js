@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formId:   ZOHO_FORM_ID,
     formName: ZOHO_FORM_NAME,
 
-    requiredNames:  ["Company", "Last Name", "Website", "LEADCF9", "LEADCF10", "LEADCF10_confirm", "LEADCF130", "LEADCF52"],
+    requiredNames:  ["Company", "Last Name", "Website", "Phone", "Email", "Email_confirm", "LEADCF130", "LEADCF52"],
     requiredLabels: [
       "法人名・団体名",
       "ご担当者さま氏名",
@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "チーム① 想定人数"
     ],
 
-    emailSelector:        "#LEADCF10",
-    emailConfirmSelector: "#LEADCF10_confirm",
-    phoneSelector:        "#LEADCF9",
+    emailSelector:        "#Email",
+    emailConfirmSelector: "#Email_confirm",
+    phoneSelector:        "#Phone",
     phoneErrorSelector:   "#phone-error",
 
     selectAriaIds: [],
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       // 2) ご担当者さま電話番号チェック（ハイフン必須 + 国内/E.164）
-      const phoneEl = document.getElementById("LEADCF9");
+      const phoneEl = document.getElementById("Phone");
       const errEl   = document.getElementById("phone-error");
       const raw     = (phoneEl?.value || "").trim();
 
@@ -134,12 +134,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function fillConfirm() {
     const sel = document.getElementById("LEADCF263_select");
     document.getElementById("conf-first_time").textContent = sel?.value === "yes" ? "はい" : "いいえ";
-    document.getElementById("conf-LEADCF10").textContent          = val("LEADCF10");
-    document.getElementById("conf-LEADCF10_confirm").textContent  = val("LEADCF10_confirm");
+    document.getElementById("conf-Email").textContent          = val("Email");
+    document.getElementById("conf-Email_confirm").textContent  = val("Email_confirm");
     document.getElementById("conf-Company").textContent           = val("Company");
     document.getElementById("conf-Last_Name").textContent         = val("Last_Name");
     document.getElementById("conf-Website").textContent           = val("Website");
-    document.getElementById("conf-LEADCF9").textContent           = val("LEADCF9");
+    document.getElementById("conf-Phone").textContent           = val("Phone");
 
     document.getElementById("conf-LEADCF130").textContent         = val("LEADCF130");
     document.getElementById("conf-LEADCF52").textContent          = val("LEADCF52");
