@@ -240,7 +240,9 @@ document.addEventListener("DOMContentLoaded", () => {
 (function notifyHeightToParent() {
   const target = document.getElementById("crmWebToEntityForm");
   const send = () => {
-    const h = target ? target.getBoundingClientRect().bottom : document.body.scrollHeight;
+    const h = target
+      ? target.offsetTop + target.offsetHeight
+      : document.body.scrollHeight;
     window.parent.postMessage({
       type: "formHeight",
       height: Math.ceil(h) + 40
@@ -248,4 +250,5 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   new ResizeObserver(send).observe(document.body);
   window.addEventListener("load", send);
+  setTimeout(send, 300);   // レイアウト確定後にもう一度
 })();
