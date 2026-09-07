@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("LEADCF162")?.value || "";
   }
 
-  goConfirmBtn?.addEventListener("click", () => {
+    goConfirmBtn?.addEventListener("click", () => {
     // 入力チェック（ここで送信はしない）
     if (!doValidate()) return;
 
@@ -194,18 +194,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // 画面切り替え
     editSection.style.display = "none";
     confirmSection.style.display = "block";
-    const topAnchor = document.getElementById("top");
-    if (topAnchor) {
-      topAnchor.scrollIntoView({ behavior: "smooth" });
-    }
-    window.parent.postMessage({ type: "scrollToTop" }, "*");
+
+    // 高さ変更が親に伝わってからスクロール
+    setTimeout(() => {
+      window.parent.postMessage({ type: "scrollToTop" }, "*");
+    }, 100);
   });
 
   // 修正に戻る
-  backBtn?.addEventListener("click", () => {
+    backBtn?.addEventListener("click", () => {
     confirmSection.style.display = "none";
     editSection.style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    setTimeout(() => {
+      window.parent.postMessage({ type: "scrollToTop" }, "*");
+    }, 100);
   });
 
   // 送信（確認画面の「送信する」）
