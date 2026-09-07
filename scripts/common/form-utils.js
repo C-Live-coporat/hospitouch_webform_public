@@ -17,7 +17,7 @@ export function attachPhoneHalfWidthHyphenOnly(phoneSelector, errorTextSelector)
   if (!phone) return () => true;
 
   // ここを拡張：+ と空白も許可
-  const regex = /^[0-9+\-\s]*$/;
+  const regex = /^\d*$/;
 
   const handler = () => {
     const ok = regex.test(phone.value);
