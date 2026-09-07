@@ -288,13 +288,15 @@ fieldset .zcwf_col_fld {
 .zcwf_button:active {
   transform: translateY(1px);
 }
-.formsubmit.zcwf_button {
+.formsubmit.zcwf_button,
+#goConfirmBtn.zcwf_button {
   color: #fff !important;
   background: #00786c;
   border-color: #00786c;
 }
-.formsubmit.zcwf_button:hover {
-  background: #00695f;   /* ホバー時に少し暗く */
+.formsubmit.zcwf_button:hover,
+#goConfirmBtn.zcwf_button:hover {
+  background: #00695f;
   border-color: #00695f;
 }
 
