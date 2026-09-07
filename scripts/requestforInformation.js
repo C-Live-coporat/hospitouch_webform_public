@@ -237,5 +237,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
+(function notifyHeightToParent() {
+  const send = () => {
+    window.parent.postMessage({
+      type: "formHeight",
+      height: document.documentElement.scrollHeight
+    }, "*");
+  };
+  new ResizeObserver(send).observe(document.body);
+  window.addEventListener("load", send);
+})();
 
