@@ -290,12 +290,12 @@ fieldset .zcwf_col_fld {
 }
 .formsubmit.zcwf_button {
   color: #fff !important;
-  background: var(--brand);
-  border-color: var(--brand);
+  background: #00786c;
+  border-color: #00786c;
 }
 .formsubmit.zcwf_button:hover {
-  background: var(--brand-hover);
-  border-color: var(--brand-hover);
+  background: #00695f;   /* ホバー時に少し暗く */
+  border-color: #00695f;
 }
 
 /* ボタン間隔（行共通 & 確認画面） */
