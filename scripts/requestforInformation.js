@@ -238,13 +238,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 (function notifyHeightToParent() {
+  const target = document.getElementById("crmWebToEntityForm");
   const send = () => {
+    const h = target ? target.getBoundingClientRect().bottom : document.body.scrollHeight;
     window.parent.postMessage({
       type: "formHeight",
-      height: document.documentElement.scrollHeight
+      height: Math.ceil(h) + 40
     }, "*");
   };
   new ResizeObserver(send).observe(document.body);
   window.addEventListener("load", send);
 })();
-
