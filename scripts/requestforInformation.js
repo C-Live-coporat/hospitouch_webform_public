@@ -67,8 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // select の aria-selected を補助（Zoho互換）
     selectAriaIds: ["LEADCF1"],
 
-    // 追加：はい/いいえ必須 ＋ ご担当者さま電話番号の国内/国際チェック（※ハイフン必須）
-    extraValidate: () => {
+ extraValidate: () => {
       // 1) はい/いいえ select の必須チェック
       const sel = document.getElementById("LEADCF6");
       if (!sel?.value) {
@@ -79,47 +78,26 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
       }
 
-      // 2) ご担当者さま電話番号の日本向けルール（ハイフン必須）
+      // 2) 電話番号（ハイフンなし・数字のみに正規化してチェック）
       const phoneEl = document.getElementById("Phone");
       const errEl = document.getElementById("phone-error");
-      const raw = (phoneEl?.value || "").trim();
 
-      // 許可：半角数字・ハイフン・空白・+ のみ
-      const allowed = /^[0-9+\-\s]+$/.test(raw);
-      const hasHyphen = raw.includes("-");
-      if (allowed && !hasHyphen) {
-        phoneEl?.classList.add("redBorder");
-        if (errEl) errEl.classList.add("open");
-        alert(
-          "電話番号には必ずハイフン（-）を含めて入力してください。\n例：03-1234-5678 / 090-1234-5678 / +81-3-1234-5678"
-        );
-        phoneEl?.focus();
-        return false;
-      }
+      // 全角→半角、数字以外を除去
+      const digits = (phoneEl?.value || "")
+        .replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
+        .replace(/\D/g, "");
 
-      // 正規化：区切りを除外
-      const noSep = raw.replace(/[\s-]/g, "");
-      const digits = noSep.replace(/\D/g, "");
+      if (phoneEl) phoneEl.value = digits;
 
-      let ok = false;
-
-      if (allowed) {
-        if (noSep.startsWith("+")) {
-          ok = /^\+[1-9]\d{7,14}$/.test(noSep);
-        } else {
-          ok =
-            digits.startsWith("0") &&
-            (digits.length === 10 || digits.length === 11);
-        }
-      }
+      const ok =
+        digits.startsWith("0") &&
+        (digits.length === 10 || digits.length === 11);
 
       phoneEl?.classList.toggle("redBorder", !ok);
       if (errEl) errEl.classList.toggle("open", !ok);
 
       if (!ok) {
-        alert(
-          "電話番号の形式が正しくありません。\n国内は「0」始まりで数字合計10〜11桁、または国際形式（+81 〜）で入力してください。"
-        );
+        alert("電話番号は「0」始まりの数字10〜11桁で入力してください。");
         phoneEl?.focus();
         return false;
       }
