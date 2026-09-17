@@ -21,10 +21,6 @@ if (window.ZOHO && ZOHO.embeddedForm) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById(ZOHO_FORM_ID);
-  const editSection = document.getElementById("editSection");
-  const confirmSection = document.getElementById("confirmSection");
-  const goConfirmBtn = document.getElementById("goConfirmBtn");
-  const backBtn = document.getElementById("backToEditBtn");
   const finalBtn = document.getElementById("submitFinalBtn");
   const lastNameInput = document.getElementById("Last_Name");
   const leadcf17Input = document.getElementById("LEADCF17");
@@ -156,87 +152,41 @@ document.addEventListener("DOMContentLoaded", () => {
     update();
   })();
 
-  // ====== 確認画面へ ======
-  function fillConfirm() {
-    const $ = (id) => document.getElementById(id);
+  // ====== 送信（入力画面から直接） ======
+  let sending = false;
 
-    // はい/いいえ
-    const sel2 = document.getElementById("LEADCF6");
-    document.getElementById("conf-first_time").textContent = sel2?.value || "";
-    document.getElementById("conf-Email").textContent =
-      document.getElementById("Email")?.value || "";
-    document.getElementById("conf-LEADCF2").textContent =
-      document.getElementById("LEADCF2")?.value || "";
-    document.getElementById("conf-Company").textContent =
-      document.getElementById("Company")?.value || "";
-    document.getElementById("conf-Last_Name").textContent =
-      document.getElementById("Last_Name")?.value || "";
-    document.getElementById("conf-Website").textContent =
-      document.getElementById("Website")?.value || "";
-    document.getElementById("conf-Phone").textContent =
-      document.getElementById("Phone")?.value || "";
+  finalBtn?.addEventListener("click", async (e) => {
+    e.preventDefault();
 
-    const sel = document.getElementById("LEADCF1");
-    document.getElementById("conf-LEADCF1").textContent =
-      sel?.selectedOptions?.[0]?.textContent || "";
+    if (sending) return; // 二重送信防止
 
-    document.getElementById("conf-LEADCF162").textContent =
-      document.getElementById("LEADCF162")?.value || "";
-  }
+    const sel = document.getElementById("LEADCF6");
+    const cb = document.getElementById("LEADCF258");
+    if (cb) cb.checked = sel?.value === "はい";
 
-    goConfirmBtn?.addEventListener("click", () => {
-    // 入力チェック（ここで送信はしない）
     if (!doValidate()) return;
 
-    // 確認画面へ値を転記
-    fillConfirm();
+    sending = true;
+    finalBtn.disabled = true;
 
-    // 画面切り替え
-    editSection.style.display = "none";
-    confirmSection.style.display = "block";
+    // FormData を作成
+    const formData = new FormData(form);
 
-    // 高さ変更が親に伝わってからスクロール
-    setTimeout(() => {
-      window.parent.postMessage({ type: "scrollToTop" }, "*");
-    }, 100);
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors" // Zoho 受信用
+      });
+      // 送信完了を親ページに通知
+      window.parent.postMessage({ type: "formSubmitted" }, "*");
+    } catch (err) {
+      console.error("送信エラー", err);
+      alert("送信に失敗しました。もう一度お試しください。");
+      sending = false;
+      finalBtn.disabled = false;
+    }
   });
-
-  // 修正に戻る
-    backBtn?.addEventListener("click", () => {
-    confirmSection.style.display = "none";
-    editSection.style.display = "block";
-
-    setTimeout(() => {
-      window.parent.postMessage({ type: "scrollToTop" }, "*");
-    }, 100);
-  });
-
-  // 送信（確認画面の「送信する」）
-  finalBtn?.addEventListener("click", async (e) => {
-  e.preventDefault();
-
-  const sel = document.getElementById("LEADCF6");
-  const cb = document.getElementById("LEADCF258");
-  if (cb) cb.checked = sel.value === "はい";
-
-  if (!doValidate()) return;
-
-  // FormData を作成
-  const formData = new FormData(form);
-
-  try {
-    await fetch(form.action, {
-      method: "POST",
-      body: formData,
-      mode: "no-cors" // Zoho 受信用
-    });
-    // 送信完了を親ページに通知
-    window.parent.postMessage({ type: "formSubmitted" }, "*");
-  } catch (err) {
-    console.error("送信エラー", err);
-    alert("送信に失敗しました。もう一度お試しください。");
-  }
-});
 });
 
 
